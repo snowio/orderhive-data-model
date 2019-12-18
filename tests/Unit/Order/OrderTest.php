@@ -76,10 +76,36 @@ class OrderTest extends TestCase
                 "discount_type" => "PERCENT"
             ]],
             "shipping_address" => [
-
+                "address1" => "29/A Bhavana Society, Opp Mangal Park",
+                "address2" => "Gita Mandir Road",
+                "city" => "Ahmedabad",
+                "country" => "India",
+                "country_code" => "IN",
+                "state" => "Gujarat",
+                "zipcode" => "380022",
+                "name" => "Nei Santos",
+                "company" => "",
+                "created" => "",
+                "id" => "0",
+                "modified" => time(),
+                "email" => "ns@amp.co",
+                "contact_number" => ""
             ],
             "billing_address" => [
-
+                "address1" => "29/A Bhavana Society, Opp Mangal Park",
+                "address2" => "Gita Mandir Road",
+                "city" => "Ahmedabad",
+                "country" => "India",
+                "country_code" => "IN",
+                "state" => "Gujarat",
+                "zipcode" => "380022",
+                "name" => "Nei Santos",
+                "company" => "",
+                "created" => "",
+                "id" => "0",
+                "modified" => time(),
+                "email" => "ns@amp.co",
+                "contact_number" => ""
             ]
         ];
     }

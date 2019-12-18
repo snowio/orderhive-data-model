@@ -8,6 +8,8 @@ final class Order
     {
         $order = new self($referenceNumber);
         $order->orderItems = ItemSet::create();
+        $order->shippingAddress = Address::create();
+        $order->billingAddress = Address::create();
         return $order;
     }
 
@@ -42,6 +44,8 @@ final class Order
         $result->updateType = $json['update_type'] ?? null;
         $result->weight = $json['weight'] ?? null;
         $result->weightUnit = $json['weight_unit'] ?? null;
+        $result->shippingAddress = Address::fromJson($json['shipping_address'] ?? []);
+        $result->billingAddress = Address::fromJson($json['billing_address'] ?? []);
         $result->orderItems = ItemSet::fromJson($json['order_items'] ?? []);
         return $result;
     }
@@ -79,8 +83,8 @@ final class Order
             'weight' => $this->weight,
             'weight_unit' => $this->weightUnit,
             'order_items' => $this->orderItems->toJson(),
-            'shipping_address' => [],
-            'billing_address' => [],
+            'shipping_address' => $this->shippingAddress->toJson(),
+            'billing_address' => $this->billingAddress->toJson(),
         ];
     }
 
@@ -148,6 +152,8 @@ final class Order
     private $updateType;
     private $weight;
     private $weightUnit;
+    private $shippingAddress;
+    private $billingAddress;
 
     /** @var ItemSet */
     private $orderItems;
@@ -676,5 +682,43 @@ final class Order
     public function getWeightUnit()
     {
         return $this->weightUnit;
+    }
+
+    /**
+     * @param Address $shippingAddress
+     * @return Order
+     */
+    public function withShippingAddress(Address $shippingAddress)
+    {
+        $result = clone $this;
+        $result->shippingAddress = $shippingAddress;
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getShippingAddress(): Address
+    {
+        return $this->shippingAddress;
+    }
+
+    /**
+     * @param Address $billingAddress
+     * @return Order
+     */
+    public function withBillingAddress(Address $billingAddress)
+    {
+        $result = clone $this;
+        $result->billingAddress = $billingAddress;
+        return $result;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getBillingAddress(): Address
+    {
+        return $this->billingAddress;
     }
 }
