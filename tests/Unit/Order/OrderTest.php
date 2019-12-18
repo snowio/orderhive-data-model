@@ -13,7 +13,7 @@ use SnowIO\OrderHiveDataModel\Order\Order;
 
 class OrderTest extends TestCase
 {
-    /*
+
     private function getJsonData($referenceNumber)
     {
         return [
@@ -33,7 +33,36 @@ class OrderTest extends TestCase
             "base_currency_rate" => 1,
             "base_currency" => "USD",
             "reference_number" => $referenceNumber,
+            'channel_primary_id' => null,
+            'channel_secondary_id' => null,
+            'components' => null,
+            'id' => null,
+            'item_warehouse' => null,
+            'meta_data' => null,
+            'product_image' => null,
+            'quantity_invoiced' => null,
+            'tax_info' => null,
+            'tax_value' => null,
+            'update_type' => null,
+            'weight' => null,
+            'weight_unit' => null,
             "order_items" => [[
+                'asin_number' => null,
+                'channel_primary_id' => null,
+                'reference_number' => null,
+                'channel_secondary_id' => null,
+                'components' => null,
+                'barcode' => null,
+                'id' => null,
+                'item_warehouse' => null,
+                'meta_data' => null,
+                'product_image' => null,
+                'quantity_invoiced' => null,
+                'tax_info' => null,
+                'tax_value' => null,
+                'update_type' => null,
+                'weight' => null,
+                'weight_unit' => null,
                 "name" => "Apple iPhone 5c 32GB Cell Phone Green",
                 "sku" => "DEMOPRODUCT4",
                 "item_id" => '001',
@@ -47,31 +76,14 @@ class OrderTest extends TestCase
                 "discount_type" => "PERCENT"
             ]],
             "shipping_address" => [
-                "address1" => "2 waterways avenue",
-                "address2" => "Apt 58",
-                "city" => "Manchester",
-                "country" => "United Kingdom",
-                "state" => "Lancashire",
-                "zipcode" => "M15 4QZ",
-                "name" => "Nei Santos",
-                "company" => "Ampersand",
-                "email" => "ns@amp.co",
-                "contact_number" => "+5541985366760"
+
             ],
             "billing_address" => [
-                "address1" => "2 waterways avenue",
-                "address2" => "Apt 58",
-                "city" => "Manchester",
-                "country" => "United Kingdom",
-                "state" => "Lancashire",
-                "zipcode" => "M15 4QZ",
-                "name" => "Nei Santos",
-                "company" => "Ampersand",
-                "email" => "ns@amp.co",
-                "contact_number" => "+5541985366760"
+
             ]
         ];
     }
+
 
     public function testFromJsonToJson()
     {
@@ -81,6 +93,7 @@ class OrderTest extends TestCase
         self::assertEquals($data, $order->toJson());
     }
 
+    /*
     public function testWithers()
     {
         $order = Order::of('REF01')

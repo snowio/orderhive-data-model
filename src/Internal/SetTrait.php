@@ -16,6 +16,7 @@ trait SetTrait
             try {
                 $key = self::getKey($item);
             } catch (\Throwable $e) {
+                echo $e->getMessage();
                 throw new OrderHiveDataException;
             }
             if (isset($set->items[$key])) {

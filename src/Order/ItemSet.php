@@ -20,9 +20,9 @@ final class ItemSet implements \IteratorAggregate
         }, $json));
     }
 
-    private static function getKey(Item $orderItem): string
+    private static function getKey(Item $orderItem): ?string
     {
-        return (string)$orderItem->getItemId();
+        return (string) $orderItem->getItemId();
     }
 
     public function toJson(): array

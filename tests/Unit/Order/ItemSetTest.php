@@ -9,7 +9,7 @@ use SnowIO\OrderHiveDataModel\Order\ItemSet;
 
 class ItemSetTest extends TestCase
 {
-    public function XestItemSetToJson()
+    public function testItemSetToJson()
     {
         $itemSet = ItemSet::of([
             Item::of(1, 99)
@@ -18,8 +18,6 @@ class ItemSetTest extends TestCase
                 ->withPrice(1.99)
                 ->withBarcode('barcode')
                 ->withAsinNumber('asinnumber')
-
-            // @todo a few more properties to map
         ]);
 
         self::assertEquals([
@@ -31,7 +29,7 @@ class ItemSetTest extends TestCase
      * @expectedException \SnowIO\OrderHiveDataModel\OrderHiveDataException
      * @expectedMessage Cannot set Item with same stockNumber
      */
-    public function XestInvalidSetItemSetTwiceInOf()
+    public function testInvalidSetItemSetTwiceInOf()
     {
         ItemSet::of([
             Item::of(1, 1),
@@ -43,17 +41,15 @@ class ItemSetTest extends TestCase
      * @expectedException \SnowIO\OrderHiveDataModel\OrderHiveDataException
      * @expectedMessage Cannot set OrderCredit with same stockNumber
      */
-    public function XestInvalidItemSetTwiceInFromJson()
+    public function testInvalidItemSetTwiceInFromJson()
     {
         ItemSet::fromJson([
-            [
-                Item::of(1, 1)->toJson(),
-                Item::of(1, 2)->toJson(),
-            ]
+            Item::of(1, 1)->toJson(),
+            Item::of(1, 2)->toJson(),
         ]);
     }
 
-    public function XestItemSetFromJson()
+    public function testItemSetFromJson()
     {
         $data = [
             $this->getSampleData(1),
@@ -65,7 +61,7 @@ class ItemSetTest extends TestCase
         self::assertEquals($data, $itemSet->toJson());
     }
 
-    public function XestDefaultValues()
+    public function testDefaultValues()
     {
         $itemSet = ItemSet::of([
             Item::of(1, 2)
@@ -74,11 +70,32 @@ class ItemSetTest extends TestCase
         self::assertEquals([
             [
                 'item_id' => 1,
-                'asin_number' => null,
-                'barcode' => null,
-                'note' => null,
-                'price' => 0,
                 'quantity_ordered' => 2,
+                'asin_number' => null,
+                'channel_primary_id' => null,
+                'reference_number' => null,
+                'channel_secondary_id' => null,
+                'components' => null,
+                'barcode' => null,
+                'discount_percent' => null,
+                'discount_type' => null,
+                'discount_value' => null,
+                'id' => null,
+                'item_warehouse' => null,
+                'meta_data' => null,
+                'name' => null,
+                'note' => null,
+                'price' => null,
+                'product_image' => null,
+                'quantity_invoiced' => null,
+                'row_total' => null,
+                'sku' => null,
+                'tax_info' => null,
+                'tax_percent' => null,
+                'tax_value' => null,
+                'update_type' => null,
+                'weight' => null,
+                'weight_unit' => null,
             ]
         ], $itemSet->toJson());
     }
@@ -87,7 +104,7 @@ class ItemSetTest extends TestCase
      * @expectedException \SnowIO\OrderHiveDataModel\OrderHiveDataException
      * @expectedMessage Cannot set Item with same orderItemId
      */
-    public function XestItemTwice()
+    public function testItemTwice()
     {
         ItemSet::of([
             Item::of(2, 1),
@@ -95,7 +112,7 @@ class ItemSetTest extends TestCase
         ]);
     }
 
-    public function XestGetShouldUseOrderItemIdAsKey()
+    public function testGetShouldUseOrderItemIdAsKey()
     {
         $itemSet = ItemSet::of([
             Item::of(1, 1)
@@ -104,7 +121,7 @@ class ItemSetTest extends TestCase
         self::assertNull($itemSet->get(0));
     }
 
-    public function XestEquality()
+    public function testEquality()
     {
         $itemSet = ItemSet::of([
             Item::of(1, 0),
@@ -135,7 +152,26 @@ class ItemSetTest extends TestCase
             'sku' => 'sku',
             'name' => 'name',
             'quantity_ordered' => 99,
-
+            'channel_primary_id' => null,
+            'reference_number' => null,
+            'channel_secondary_id' => null,
+            'components' => null,
+            'discount_percent' => null,
+            'discount_type' => null,
+            'discount_value' => null,
+            'id' => null,
+            'item_warehouse' => null,
+            'meta_data' => null,
+            'note' => null,
+            'product_image' => null,
+            'quantity_invoiced' => null,
+            'row_total' => null,
+            'tax_info' => null,
+            'tax_percent' => null,
+            'tax_value' => null,
+            'update_type' => null,
+            'weight' => null,
+            'weight_unit' => null,
         ];
     }
 }
