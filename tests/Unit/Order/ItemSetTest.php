@@ -6,6 +6,7 @@ namespace SnowIO\OrderHiveDataModel\Test\Unit\Order;
 use PHPUnit\Framework\TestCase;
 use SnowIO\OrderHiveDataModel\Order\Item;
 use SnowIO\OrderHiveDataModel\Order\ItemSet;
+use SnowIO\OrderHiveDataModel\OrderHiveDataException;
 
 class ItemSetTest extends TestCase
 {
@@ -25,24 +26,20 @@ class ItemSetTest extends TestCase
         ], $itemSet->toJson());
     }
 
-    /**
-     * @expectedException \SnowIO\OrderHiveDataModel\OrderHiveDataException
-     * @expectedMessage Cannot set Item with same stockNumber
-     */
     public function testInvalidSetItemSetTwiceInOf()
     {
+        $this->expectException(OrderHiveDataException::class);
+
         ItemSet::of([
             Item::of(1, 1),
             Item::of(1, 1)
         ]);
     }
 
-    /**
-     * @expectedException \SnowIO\OrderHiveDataModel\OrderHiveDataException
-     * @expectedMessage Cannot set OrderCredit with same stockNumber
-     */
     public function testInvalidItemSetTwiceInFromJson()
     {
+        $this->expectException(OrderHiveDataException::class);
+
         ItemSet::fromJson([
             Item::of(1, 1)->toJson(),
             Item::of(1, 2)->toJson(),
@@ -100,12 +97,10 @@ class ItemSetTest extends TestCase
         ], $itemSet->toJson());
     }
 
-    /**
-     * @expectedException \SnowIO\OrderHiveDataModel\OrderHiveDataException
-     * @expectedMessage Cannot set Item with same orderItemId
-     */
     public function testItemTwice()
     {
+        $this->expectException(OrderHiveDataException::class);
+
         ItemSet::of([
             Item::of(2, 1),
             Item::of(2, 1)
