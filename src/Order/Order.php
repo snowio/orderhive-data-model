@@ -10,6 +10,7 @@ final class Order
         $order->orderItems = ItemSet::create();
         $order->shippingAddress = Address::create();
         $order->billingAddress = Address::create();
+        $order->taxInfo = TaxInfo::create();
         return $order;
     }
 
@@ -37,13 +38,12 @@ final class Order
         $result->id = $json['id'] ?? null;
         $result->itemWarehouse = $json['item_warehouse'] ?? null;
         $result->metaData = $json['meta_data'] ?? null;
-        $result->productImage = $json['product_image'] ?? null;
         $result->quantityInvoiced = $json['quantity_invoiced'] ?? null;
-        $result->taxInfo = $json['tax_info'] ?? null;
         $result->taxValue = $json['tax_value'] ?? null;
         $result->updateType = $json['update_type'] ?? null;
         $result->weight = $json['weight'] ?? null;
         $result->weightUnit = $json['weight_unit'] ?? null;
+        $result->taxInfo = TaxInfo::fromJson($json['tax_info'] ?? []);
         $result->shippingAddress = Address::fromJson($json['shipping_address'] ?? []);
         $result->billingAddress = Address::fromJson($json['billing_address'] ?? []);
         $result->orderItems = ItemSet::fromJson($json['order_items'] ?? []);
@@ -75,13 +75,12 @@ final class Order
             'id' => $this->id,
             'item_warehouse' => $this->itemWarehouse,
             'meta_data' => $this->metaData,
-            'product_image' => $this->productImage,
             'quantity_invoiced' => $this->quantityInvoiced,
-            'tax_info' => $this->taxInfo,
             'tax_value' => $this->taxValue,
             'update_type' => $this->updateType,
             'weight' => $this->weight,
             'weight_unit' => $this->weightUnit,
+            'tax_info' => $this->taxInfo->toJson(),
             'order_items' => $this->orderItems->toJson(),
             'shipping_address' => $this->shippingAddress->toJson(),
             'billing_address' => $this->billingAddress->toJson(),
@@ -113,13 +112,12 @@ final class Order
         ($this->id === $object->id) &&
         ($this->itemWarehouse === $object->itemWarehouse) &&
         ($this->metaData === $object->metaData) &&
-        ($this->productImage === $object->productImage) &&
         ($this->quantityInvoiced === $object->quantityInvoiced) &&
-        ($this->taxInfo === $object->taxInfo) &&
         ($this->taxValue === $object->taxValue) &&
         ($this->updateType === $object->updateType) &&
         ($this->weight === $object->weight) &&
         ($this->weightUnit === $object->weightUnit) &&
+        ($this->taxInfo->equals($object->taxInfo)) &&
         ($this->orderItems->equals($object->orderItems));
     }
 
@@ -145,7 +143,6 @@ final class Order
     private $id;
     private $itemWarehouse;
     private $metaData;
-    private $productImage;
     private $quantityInvoiced;
     private $taxInfo;
     private $taxValue;
@@ -161,6 +158,7 @@ final class Order
     private function __construct($referenceNumber)
     {
         $this->referenceNumber = $referenceNumber;
+        $this->taxInfo = TaxInfo::create();
     }
 
     public function getOrderType(): ?string
@@ -223,12 +221,12 @@ final class Order
         return $result;
     }
 
-    public function getStoreId(): ?string
+    public function getStoreId(): int
     {
         return $this->storeId;
     }
 
-    public function withStoreId($storeId): self
+    public function withStoreId(int $storeId): self
     {
         $result = clone $this;
         $result->storeId = $storeId;
@@ -248,10 +246,10 @@ final class Order
     }
 
     /**
-     * @param string $paymentStatus
+     * @param string|null $paymentStatus
      * @return Order
      */
-    public function withPaymentStatus($paymentStatus)
+    public function withPaymentStatus(?string $paymentStatus)
     {
         $result = clone $this;
         $result->paymentStatus = $paymentStatus;
@@ -261,7 +259,7 @@ final class Order
     /**
      * @return string
      */
-    public function getPaymentStatus()
+    public function getPaymentStatus(): ?string
     {
         return $this->paymentStatus;
     }
@@ -270,7 +268,7 @@ final class Order
      * @param string $paymentMethod
      * @return Order
      */
-    public function withPaymentMethod($paymentMethod)
+    public function withPaymentMethod(?string $paymentMethod)
     {
         $result = clone $this;
         $result->paymentMethod = $paymentMethod;
@@ -280,7 +278,7 @@ final class Order
     /**
      * @return string
      */
-    public function getPaymentMethod() :string
+    public function getPaymentMethod() :?string
     {
         return $this->paymentMethod;
     }
@@ -362,10 +360,10 @@ final class Order
     }
 
     /**
-     * @param mixed $channelId
+     * @param int $channelId
      * @return Order
      */
-    public function withChannelId($channelId)
+    public function withChannelId(int $channelId): self
     {
         $result = clone $this;
         $result->channelId = $channelId;
@@ -373,9 +371,9 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getChannelId()
+    public function getChannelId(): ?int
     {
         return $this->channelId;
     }
@@ -384,7 +382,7 @@ final class Order
      * @param mixed $remark
      * @return Order
      */
-    public function withRemark($remark)
+    public function withRemark($remark): self
     {
         $result = clone $this;
         $result->remark = $remark;
@@ -403,7 +401,7 @@ final class Order
      * @param mixed $syncCreated
      * @return Order
      */
-    public function withSyncCreated($syncCreated)
+    public function withSyncCreated($syncCreated): self
     {
         $result = clone $this;
         $result->syncCreated = $syncCreated;
@@ -422,7 +420,7 @@ final class Order
      * @param mixed $grandTotal
      * @return Order
      */
-    public function withGrandTotal($grandTotal)
+    public function withGrandTotal($grandTotal): self
     {
         $result = clone $this;
         $result->grandTotal = $grandTotal;
@@ -441,7 +439,7 @@ final class Order
      * @param mixed $channelPrimaryId
      * @return Order
      */
-    public function withChannelPrimaryId($channelPrimaryId)
+    public function withChannelPrimaryId($channelPrimaryId): self
     {
         $result = clone $this;
         $result->channelPrimaryId = $channelPrimaryId;
@@ -460,7 +458,7 @@ final class Order
      * @param mixed $channelSecondaryId
      * @return Order
      */
-    public function withChannelSecondaryId($channelSecondaryId)
+    public function withChannelSecondaryId($channelSecondaryId): self
     {
         $result = clone $this;
         $result->channelSecondaryId = $channelSecondaryId;
@@ -479,7 +477,7 @@ final class Order
      * @param mixed $components
      * @return Order
      */
-    public function withComponents($components)
+    public function withComponents($components): self
     {
         $result = clone $this;
         $result->components = $components;
@@ -495,10 +493,10 @@ final class Order
     }
 
     /**
-     * @param mixed $id
+     * @param int|null $id
      * @return Order
      */
-    public function withId($id)
+    public function withId(?int $id): self
     {
         $result = clone $this;
         $result->id = $id;
@@ -506,9 +504,9 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -517,7 +515,7 @@ final class Order
      * @param mixed $itemWarehouse
      * @return Order
      */
-    public function withItemWarehouse($itemWarehouse)
+    public function withItemWarehouse($itemWarehouse): self
     {
         $result = clone $this;
         $result->itemWarehouse = $itemWarehouse;
@@ -536,7 +534,7 @@ final class Order
      * @param mixed $metaData
      * @return Order
      */
-    public function withMetaData($metaData)
+    public function withMetaData($metaData): self
     {
         $result = clone $this;
         $result->metaData = $metaData;
@@ -552,29 +550,10 @@ final class Order
     }
 
     /**
-     * @param mixed $productImage
+     * @param int|null $quantityInvoiced
      * @return Order
      */
-    public function withProductImage($productImage)
-    {
-        $result = clone $this;
-        $result->productImage = $productImage;
-        return $result;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getProductImage()
-    {
-        return $this->productImage;
-    }
-
-    /**
-     * @param mixed $quantityInvoiced
-     * @return Order
-     */
-    public function withQuantityInvoiced($quantityInvoiced)
+    public function withQuantityInvoiced(?int $quantityInvoiced): self
     {
         $result = clone $this;
         $result->quantityInvoiced = $quantityInvoiced;
@@ -582,18 +561,18 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getQuantityInvoiced()
+    public function getQuantityInvoiced(): ?int
     {
         return $this->quantityInvoiced;
     }
 
     /**
-     * @param mixed $taxInfo
+     * @param TaxInfo $taxInfo
      * @return Order
      */
-    public function withTaxInfo($taxInfo)
+    public function withTaxInfo(TaxInfo $taxInfo): self
     {
         $result = clone $this;
         $result->taxInfo = $taxInfo;
@@ -601,18 +580,18 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return TaxInfo
      */
-    public function getTaxInfo()
+    public function getTaxInfo(): TaxInfo
     {
         return $this->taxInfo;
     }
 
     /**
-     * @param mixed $taxValue
+     * @param float|null $taxValue
      * @return Order
      */
-    public function withTaxValue($taxValue)
+    public function withTaxValue(?float $taxValue): self
     {
         $result = clone $this;
         $result->taxValue = $taxValue;
@@ -622,16 +601,16 @@ final class Order
     /**
      * @return mixed
      */
-    public function getTaxValue()
+    public function getTaxValue(): ?float
     {
         return $this->taxValue;
     }
 
     /**
-     * @param mixed $updateType
+     * @param string|null $updateType
      * @return Order
      */
-    public function withUpdateType($updateType)
+    public function withUpdateType(?string $updateType): self
     {
         $result = clone $this;
         $result->updateType = $updateType;
@@ -639,18 +618,18 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getUpdateType()
+    public function getUpdateType(): ?string
     {
         return $this->updateType;
     }
 
     /**
-     * @param mixed $weight
+     * @param float|null $weight
      * @return Order
      */
-    public function withWeight($weight)
+    public function withWeight(?float $weight): self
     {
         $result = clone $this;
         $result->weight = $weight;
@@ -658,9 +637,9 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getWeight()
+    public function getWeight(): ?float
     {
         return $this->weight;
     }
@@ -669,7 +648,7 @@ final class Order
      * @param mixed $weightUnit
      * @return Order
      */
-    public function withWeightUnit($weightUnit)
+    public function withWeightUnit(?string $weightUnit): self
     {
         $result = clone $this;
         $result->weightUnit = $weightUnit;
@@ -677,9 +656,9 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getWeightUnit()
+    public function getWeightUnit(): ?string
     {
         return $this->weightUnit;
     }
@@ -688,7 +667,7 @@ final class Order
      * @param Address $shippingAddress
      * @return Order
      */
-    public function withShippingAddress(Address $shippingAddress)
+    public function withShippingAddress(Address $shippingAddress): self
     {
         $result = clone $this;
         $result->shippingAddress = $shippingAddress;
@@ -707,7 +686,7 @@ final class Order
      * @param Address $billingAddress
      * @return Order
      */
-    public function withBillingAddress(Address $billingAddress)
+    public function withBillingAddress(Address $billingAddress): self
     {
         $result = clone $this;
         $result->billingAddress = $billingAddress;
@@ -720,5 +699,24 @@ final class Order
     public function getBillingAddress(): Address
     {
         return $this->billingAddress;
+    }
+
+    /**
+     * @param int $warehouseId
+     * @return Order
+     */
+    public function withWarehouseId(int $warehouseId): self
+    {
+        $result = clone $this;
+        $result->warehouseId = $warehouseId;
+        return $result;
+    }
+
+    /**
+     * @return int
+     */
+    public function getWarehouseId(): int
+    {
+        return $this->warehouseId;
     }
 }

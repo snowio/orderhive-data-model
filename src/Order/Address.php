@@ -18,7 +18,7 @@ class Address
         return new self(null);
     }
 
-    public static function fromJson($json): self
+    public static function fromJson(array $json): self
     {
         return self::of($json['id'] ?? null)
             ->withAddress1($json['address1'] ?? null)
@@ -97,9 +97,9 @@ class Address
 
     /**
      * @param string $address1
-     * @return BillingAddress
+     * @return Address
      */
-    public function withAddress1($address1)
+    public function withAddress1(?string $address1): self
     {
         $result = clone $this;
         $result->address1 = $address1;
@@ -109,16 +109,16 @@ class Address
     /**
      * @return string
      */
-    public function getAddress1()
+    public function getAddress1(): ?string
     {
         return $this->address1;
     }
 
     /**
      * @param string $address2
-     * @return BillingAddress
+     * @return Address
      */
-    public function withAddress2($address2)
+    public function withAddress2(?string $address2): self
     {
         $result = clone $this;
         $result->address2 = $address2;
@@ -128,16 +128,16 @@ class Address
     /**
      * @return string
      */
-    public function getAddress2()
+    public function getAddress2(): ?string
     {
         return $this->address2;
     }
 
     /**
      * @param string $city
-     * @return BillingAddress
+     * @return Address
      */
-    public function withCity($city)
+    public function withCity(?string $city): self
     {
         $result = clone $this;
         $result->city = $city;
@@ -147,16 +147,16 @@ class Address
     /**
      * @return string
      */
-    public function getCity()
+    public function getCity(): ?string
     {
         return $this->city;
     }
 
     /**
      * @param string $company
-     * @return BillingAddress
+     * @return Address
      */
-    public function withCompany($company)
+    public function withCompany($company): self
     {
         $result = clone $this;
         $result->company = $company;
@@ -166,16 +166,16 @@ class Address
     /**
      * @return string
      */
-    public function getCompany()
+    public function getCompany(): ?string
     {
         return $this->company;
     }
 
     /**
      * @param string $contactNumber
-     * @return BillingAddress
+     * @return Address
      */
-    public function withContactNumber($contactNumber)
+    public function withContactNumber(?string $contactNumber): self
     {
         $result = clone $this;
         $result->contactNumber = $contactNumber;
@@ -185,16 +185,16 @@ class Address
     /**
      * @return string
      */
-    public function getContactNumber()
+    public function getContactNumber(): ?string
     {
         return $this->contactNumber;
     }
 
     /**
      * @param string $country
-     * @return BillingAddress
+     * @return Address
      */
-    public function withCountry($country)
+    public function withCountry(?string $country): self
     {
         $result = clone $this;
         $result->country = $country;
@@ -204,16 +204,16 @@ class Address
     /**
      * @return string
      */
-    public function getCountry()
+    public function getCountry(): ?string
     {
         return $this->country;
     }
 
     /**
      * @param string $countryCode
-     * @return BillingAddress
+     * @return Address
      */
-    public function withCountryCode($countryCode)
+    public function withCountryCode(?string $countryCode): self
     {
         $result = clone $this;
         $result->countryCode = $countryCode;
@@ -223,16 +223,16 @@ class Address
     /**
      * @return string
      */
-    public function getCountryCode()
+    public function getCountryCode(): ?string
     {
         return $this->countryCode;
     }
 
     /**
      * @param string $created
-     * @return BillingAddress
+     * @return Address
      */
-    public function withCreated($created)
+    public function withCreated(?string $created): self
     {
         $result = clone $this;
         $result->created = $created;
@@ -242,16 +242,16 @@ class Address
     /**
      * @return string
      */
-    public function getCreated()
+    public function getCreated(): ?string
     {
         return $this->created;
     }
 
     /**
      * @param string $email
-     * @return BillingAddress
+     * @return Address
      */
-    public function withEmail($email)
+    public function withEmail(?string $email): self
     {
         $result = clone $this;
         $result->email = $email;
@@ -261,16 +261,16 @@ class Address
     /**
      * @return string
      */
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->email;
     }
 
     /**
      * @param int $id
-     * @return BillingAddress
+     * @return Address
      */
-    public function withId(int $id): BillingAddress
+    public function withId(int $id): self
     {
         $result = clone $this;
         $result->id = $id;
@@ -286,10 +286,10 @@ class Address
     }
 
     /**
-     * @param string $modified
-     * @return BillingAddress
+     * @param string|null $modified
+     * @return Address
      */
-    public function withModified($modified)
+    public function withModified(?string $modified): self
     {
         $result = clone $this;
         $result->modified = $modified;
@@ -299,16 +299,16 @@ class Address
     /**
      * @return string
      */
-    public function getModified()
+    public function getModified(): ?string
     {
         return $this->modified;
     }
 
     /**
-     * @param string $name
-     * @return BillingAddress
+     * @param string|null $name
+     * @return Address
      */
-    public function withName($name)
+    public function withName(?string $name): self
     {
         $result = clone $this;
         $result->name = $name;
@@ -318,16 +318,16 @@ class Address
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
      * @param string $state
-     * @return BillingAddress
+     * @return Address
      */
-    public function withState($state)
+    public function withState(?string $state): self
     {
         $result = clone $this;
         $result->state = $state;
@@ -337,16 +337,16 @@ class Address
     /**
      * @return string
      */
-    public function getState()
+    public function getState(): ?string
     {
         return $this->state;
     }
 
     /**
      * @param string $zipcode
-     * @return BillingAddress
+     * @return Address
      */
-    public function withZipcode($zipcode)
+    public function withZipcode(?string $zipcode): self
     {
         $result = clone $this;
         $result->zipcode = $zipcode;
@@ -356,7 +356,7 @@ class Address
     /**
      * @return string
      */
-    public function getZipcode()
+    public function getZipcode(): ?string
     {
         return $this->zipcode;
     }

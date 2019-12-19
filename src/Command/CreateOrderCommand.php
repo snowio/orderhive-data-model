@@ -32,7 +32,7 @@ final class CreateOrderCommand
         ];
     }
 
-    /** @var  */
+    /** @var Order $order */
     private $order;
 
     private function __construct()

@@ -83,11 +83,20 @@ class ItemSetTest extends TestCase
                 'name' => null,
                 'note' => null,
                 'price' => null,
-                'product_image' => null,
+                'product_image' => [
+                    'id' => null,
+                    'default_image' => null,
+                    'thumbnail' => null,
+                    'url' => null,
+                ],
                 'quantity_invoiced' => null,
                 'row_total' => null,
                 'sku' => null,
-                'tax_info' => null,
+                'tax_info' => [
+                    'id' => null,
+                    'tax_rate' => null,
+                    'groups' => [],
+                ],
                 'tax_percent' => null,
                 'tax_value' => null,
                 'update_type' => null,
@@ -133,6 +142,7 @@ class ItemSetTest extends TestCase
             Item::of(2, 0),
             Item::of(3, 2),
         ]);
+
         self::assertTrue($itemSet->equals($sameSet));
         self::assertFalse($itemSet->equals($notSameSet));
     }
@@ -158,10 +168,19 @@ class ItemSetTest extends TestCase
             'item_warehouse' => null,
             'meta_data' => null,
             'note' => null,
-            'product_image' => null,
+            'product_image' => [
+                'id' => null,
+                'default_image' => null,
+                'thumbnail' => null,
+                'url' => null,
+            ],
             'quantity_invoiced' => null,
             'row_total' => null,
-            'tax_info' => null,
+            'tax_info' => [
+                'id' => null,
+                'tax_rate' => null,
+                'groups' => [],
+            ],
             'tax_percent' => null,
             'tax_value' => null,
             'update_type' => null,

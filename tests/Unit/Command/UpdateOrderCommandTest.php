@@ -13,7 +13,7 @@ class UpdateOrderCommandTest extends TestCase
     {
         $updateOrderCommand = UpdateOrderCommand::fromJson([
             'reference_number' => 28393283,
-            'store_id' => '46670',
+            'store_id' => 46670,
             'order_status' => OrderStatus::SHIP,
             'tax_type' => "EXCLUSIVE",
             'currency' => "USD"
@@ -21,7 +21,7 @@ class UpdateOrderCommandTest extends TestCase
 
         $expected = Order::of(28393283)
             ->withOrderStatus(OrderStatus::SHIP)
-            ->withStoreId('46670')
+            ->withStoreId(46670)
             ->withCurrency("USD")
             ->withTaxType("EXCLUSIVE");
 
@@ -32,7 +32,7 @@ class UpdateOrderCommandTest extends TestCase
     {
         $order = Order::of(28393283)
             ->withOrderStatus(OrderStatus::SHIP)
-            ->withStoreId('46670')
+            ->withStoreId(46670)
             ->withCurrency("USD")
             ->withTaxType("EXCLUSIVE");
 
@@ -41,7 +41,7 @@ class UpdateOrderCommandTest extends TestCase
         self::assertEquals([
             'reference_number' => 28393283,
             'order_status' => OrderStatus::SHIP,
-            'store_id' => "46670",
+            'store_id' => 46670,
             'warehouse_id' => null,
             'currency' => "USD",
             'tax_type' => "EXCLUSIVE",
@@ -61,9 +61,12 @@ class UpdateOrderCommandTest extends TestCase
             'id' => null,
             'item_warehouse' => null,
             'meta_data' => null,
-            'product_image' => null,
             'quantity_invoiced' => null,
-            'tax_info' => null,
+            'tax_info' => [
+                'id' => null,
+                'tax_rate' => null,
+                'groups' => [],
+            ],
             'tax_value' => null,
             'update_type' => null,
             'weight' => null,

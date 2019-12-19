@@ -4,9 +4,11 @@ namespace SnowIO\OrderHiveDataModel\Order;
 
 final class Item
 {
-    public static function of($orderItemId, $stockNumber): self
+    public static function of($itemId, $quantityOrdered): self
     {
-        $item = (new self($orderItemId, $stockNumber));
+        $item = (new self($itemId, $quantityOrdered));
+        $item->productImage = ProductImage::create();
+        $item->taxInfo = TaxInfo::create();
         return $item;
     }
 
@@ -28,11 +30,11 @@ final class Item
         $result->name = $json['name'] ?? null;
         $result->note = $json['note'] ?? null;
         $result->price = $json['price'] ?? null;
-        $result->productImage = $json['product_image'] ?? null;
+        $result->productImage = ProductImage::fromJson($json['product_image'] ?? []);
         $result->quantityInvoiced = $json['quantity_invoiced'] ?? null;
         $result->rowTotal = $json['row_total'] ?? null;
         $result->sku = $json['sku'] ?? null;
-        $result->taxInfo = $json['tax_info'] ?? null;
+        $result->taxInfo = TaxInfo::fromJson($json['tax_info'] ?? []);
         $result->taxPercent = $json['tax_percent'] ?? null;
         $result->taxValue = $json['tax_value'] ?? null;
         $result->updateType = $json['update_type'] ?? null;
@@ -60,12 +62,12 @@ final class Item
             'name' => $this->name,
             'note' => $this->note,
             'price' => $this->price,
-            'product_image' => $this->productImage,
+            'product_image' => $this->productImage->toJson(),
             'quantity_ordered' => $this->quantityOrdered,
             'quantity_invoiced' => $this->quantityInvoiced,
             'row_total' => $this->rowTotal,
             'sku' => $this->sku,
-            'tax_info' => $this->taxInfo,
+            'tax_info' => $this->taxInfo->toJson(),
             'tax_percent' => $this->taxPercent,
             'tax_value' => $this->taxValue,
             'update_type' => $this->updateType,
@@ -97,12 +99,12 @@ final class Item
         ($this->name === $object->name) &&
         ($this->note === $object->note) &&
         ($this->price === $object->price) &&
-        ($this->productImage === $object->productImage) &&
+        ($this->productImage->equals($object->productImage)) &&
         ($this->quantityOrdered === $object->quantityOrdered) &&
         ($this->quantityInvoiced === $object->quantityInvoiced) &&
         ($this->rowTotal === $object->rowTotal) &&
         ($this->sku === $object->sku) &&
-        ($this->taxInfo === $object->taxInfo) &&
+        ($this->taxInfo->equals($object->taxInfo)) &&
         ($this->taxPercent === $object->taxPercent) &&
         ($this->taxValue === $object->taxValue) &&
         ($this->updateType === $object->updateType) &&
@@ -254,10 +256,10 @@ final class Item
     }
 
     /**
-     * @param mixed $barcode
+     * @param string $barcode
      * @return Item
      */
-    public function withBarcode($barcode)
+    public function withBarcode(string $barcode): self
     {
         $result = clone $this;
         $result->barcode = $barcode;
@@ -265,18 +267,18 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getBarcode()
+    public function getBarcode(): string
     {
         return $this->barcode;
     }
 
     /**
-     * @param mixed $discountPercent
+     * @param float $discountPercent
      * @return Item
      */
-    public function withDiscountPercent($discountPercent)
+    public function withDiscountPercent($discountPercent): self
     {
         $result = clone $this;
         $result->discountPercent = $discountPercent;
@@ -284,18 +286,18 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getDiscountPercent()
+    public function getDiscountPercent(): float
     {
         return $this->discountPercent;
     }
 
     /**
-     * @param mixed $discountType
+     * @param float $discountType
      * @return Item
      */
-    public function withDiscountType($discountType)
+    public function withDiscountType($discountType): self
     {
         $result = clone $this;
         $result->discountType = $discountType;
@@ -303,18 +305,18 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getDiscountType()
+    public function getDiscountType(): float
     {
         return $this->discountType;
     }
 
     /**
-     * @param mixed $discountValue
+     * @param string $discountValue
      * @return Item
      */
-    public function withDiscountValue($discountValue)
+    public function withDiscountValue(?string $discountValue): self
     {
         $result = clone $this;
         $result->discountValue = $discountValue;
@@ -322,18 +324,18 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getDiscountValue()
+    public function getDiscountValue(): ?string
     {
         return $this->discountValue;
     }
 
     /**
-     * @param mixed $id
+     * @param int|null $id
      * @return Item
      */
-    public function withId($id)
+    public function withId(?int $id): self
     {
         $result = clone $this;
         $result->id = $id;
@@ -341,9 +343,9 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return int|nul
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -368,10 +370,10 @@ final class Item
     }
 
     /**
-     * @param mixed $name
+     * @param string $name
      * @return Item
      */
-    public function withName($name)
+    public function withName(string $name): self
     {
         $result = clone $this;
         $result->name = $name;
@@ -379,18 +381,18 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
     /**
-     * @param mixed $sku
+     * @param string $sku
      * @return Item
      */
-    public function withSku($sku)
+    public function withSku(string $sku): self
     {
         $result = clone $this;
         $result->sku = $sku;
@@ -400,16 +402,16 @@ final class Item
     /**
      * @return mixed
      */
-    public function getSku()
+    public function getSku(): string
     {
         return $this->sku;
     }
 
     /**
-     * @param mixed $price
+     * @param float $price
      * @return Item
      */
-    public function withPrice($price)
+    public function withPrice(float $price): self
     {
         $result = clone $this;
         $result->price = $price;
@@ -419,7 +421,7 @@ final class Item
     /**
      * @return mixed
      */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
@@ -428,7 +430,7 @@ final class Item
      * @param mixed $note
      * @return Item
      */
-    public function withNote($note)
+    public function withNote($note): self
     {
         $result = clone $this;
         $result->note = $note;
@@ -438,7 +440,7 @@ final class Item
     /**
      * @return mixed
      */
-    public function getNote()
+    public function getNote(): string
     {
         return $this->note;
     }
@@ -447,7 +449,7 @@ final class Item
      * @param mixed $quantityInvoiced
      * @return Item
      */
-    public function withQuantityInvoiced($quantityInvoiced)
+    public function withQuantityInvoiced($quantityInvoiced): self
     {
         $result = clone $this;
         $result->quantityInvoiced = $quantityInvoiced;
@@ -455,18 +457,18 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return int
      */
-    public function getQuantityInvoiced()
+    public function getQuantityInvoiced(): int
     {
         return $this->quantityInvoiced;
     }
 
     /**
-     * @param mixed $weightUnit
+     * @param string $weightUnit
      * @return Item
      */
-    public function withWeightUnit($weightUnit)
+    public function withWeightUnit(string $weightUnit): self
     {
         $result = clone $this;
         $result->weightUnit = $weightUnit;
@@ -482,10 +484,10 @@ final class Item
     }
 
     /**
-     * @param mixed $weight
+     * @param float $weight
      * @return Item
      */
-    public function withWeight($weight)
+    public function withWeight(float $weight): self
     {
         $result = clone $this;
         $result->weight = $weight;
@@ -493,9 +495,9 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return float
      */
-    public function getWeight()
+    public function getWeight(): float
     {
         return $this->weight;
     }
@@ -504,7 +506,7 @@ final class Item
      * @param mixed $updateType
      * @return Item
      */
-    public function withUpdateType($updateType)
+    public function withUpdateType($updateType): self
     {
         $result = clone $this;
         $result->updateType = $updateType;
@@ -523,7 +525,7 @@ final class Item
      * @param mixed $taxValue
      * @return Item
      */
-    public function withTaxValue($taxValue)
+    public function withTaxValue($taxValue): self
     {
         $result = clone $this;
         $result->taxValue = $taxValue;
@@ -542,7 +544,7 @@ final class Item
      * @param mixed $taxPercent
      * @return Item
      */
-    public function withTaxPercent($taxPercent)
+    public function withTaxPercent($taxPercent): self
     {
         $result = clone $this;
         $result->taxPercent = $taxPercent;
@@ -558,10 +560,10 @@ final class Item
     }
 
     /**
-     * @param mixed $taxInfo
+     * @param TaxInfo $taxInfo
      * @return Item
      */
-    public function withTaxInfo($taxInfo)
+    public function withTaxInfo(TaxInfo $taxInfo): self
     {
         $result = clone $this;
         $result->taxInfo = $taxInfo;
@@ -569,9 +571,9 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return TaxInfo
      */
-    public function getTaxInfo()
+    public function getTaxInfo(): TaxInfo
     {
         return $this->taxInfo;
     }
@@ -580,7 +582,7 @@ final class Item
      * @param mixed $rowTotal
      * @return Item
      */
-    public function withRowTotal($rowTotal)
+    public function withRowTotal($rowTotal): self
     {
         $result = clone $this;
         $result->rowTotal = $rowTotal;
@@ -596,10 +598,10 @@ final class Item
     }
 
     /**
-     * @param mixed $productImage
+     * @param ProductImage $productImage
      * @return Item
      */
-    public function withProductImage($productImage)
+    public function withProductImage(ProductImage $productImage): self
     {
         $result = clone $this;
         $result->productImage = $productImage;
@@ -607,9 +609,9 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return ProductImage
      */
-    public function getProductImage()
+    public function getProductImage(): ProductImage
     {
         return $this->productImage;
     }
@@ -618,7 +620,7 @@ final class Item
      * @param mixed $metaData
      * @return Item
      */
-    public function withMetaData($metaData)
+    public function withMetaData($metaData): self
     {
         $result = clone $this;
         $result->metaData = $metaData;

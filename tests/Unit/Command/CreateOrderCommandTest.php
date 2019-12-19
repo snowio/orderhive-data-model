@@ -6,6 +6,9 @@ use PHPUnit\Framework\TestCase;
 use SnowIO\OrderHiveDataModel\Command\CreateOrderCommand;
 use SnowIO\OrderHiveDataModel\Order\Order;
 use SnowIO\OrderHiveDataModel\Order\OrderStatus;
+use SnowIO\OrderHiveDataModel\Order\TaxInfo;
+use SnowIO\OrderHiveDataModel\Order\TaxInfoGroup;
+use SnowIO\OrderHiveDataModel\Order\TaxInfoGroupSet;
 
 class CreateOrderCommandTest extends TestCase
 {
@@ -13,7 +16,7 @@ class CreateOrderCommandTest extends TestCase
     {
         $createOrderCommand = CreateOrderCommand::fromJson([
             'reference_number' => 0001,
-            'store_id' => '46670',
+            'store_id' => 46670,
             'order_status' => OrderStatus::CONFIRM,
             'tax_type' => "EXCLUSIVE",
             'currency' => "USD",
@@ -21,7 +24,7 @@ class CreateOrderCommandTest extends TestCase
 
         $expected = Order::of(0001)
             ->withOrderStatus(OrderStatus::CONFIRM)
-            ->withStoreId('46670')
+            ->withStoreId(46670)
             ->withCurrency("USD")
             ->withTaxType("EXCLUSIVE");
 
@@ -33,7 +36,17 @@ class CreateOrderCommandTest extends TestCase
         $order = Order::of('28393283')
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withCurrency('USD')
-            ->withStoreId(13);
+            ->withStoreId(13)
+            ->withTaxInfo(
+                TaxInfo::of(1)
+                    ->withTaxRate(1)
+                    ->withGroups(TaxInfoGroupSet::of([
+                        TaxInfoGroup::of(1)
+                            ->withName('test')
+                            ->withTaxRate(2)
+                            ->withTotalTaxValue(0)
+                    ]))
+            );
 
         $createOrderCommand = CreateOrderCommand::of($order);
 
@@ -53,9 +66,17 @@ class CreateOrderCommandTest extends TestCase
                 'id' => null,
                 'item_warehouse' => null,
                 'meta_data' => null,
-                'product_image' => null,
                 'quantity_invoiced' => null,
-                'tax_info' => null,
+                'tax_info' => [
+                    'id' => 1,
+                    'tax_rate' => 1,
+                    'groups' => [[
+                        'id' => 1,
+                        'name' => 'test',
+                        'tax_rate' => 2,
+                        'total_tax_value' => 0
+                    ]]
+                ],
                 'tax_value' => null,
                 'update_type' => null,
                 'weight' => null,
