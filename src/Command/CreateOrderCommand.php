@@ -27,9 +27,7 @@ final class CreateOrderCommand
 
     public function toJson(): array
     {
-        return [
-            $this->order->toJson(),
-        ];
+        return $this->order->toJson();
     }
 
     /** @var Order $order */
