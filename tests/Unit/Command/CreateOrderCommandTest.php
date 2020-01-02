@@ -121,6 +121,8 @@ class CreateOrderCommandTest extends TestCase
                 'state' => null,
                 'zipcode' => null,
             ],
+            'created_date' => null,
+            'modified_date' => null,
         ], $createOrderCommand->toJson());
     }
 }
