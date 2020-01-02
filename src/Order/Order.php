@@ -4,9 +4,9 @@ namespace SnowIO\OrderHiveDataModel\Order;
 
 final class Order
 {
-    public static function of($referenceNumber): self
+    public static function of($id): self
     {
-        $order = new self($referenceNumber);
+        $order = new self($id);
         $order->orderItems = ItemSet::create();
         $order->shippingAddress = Address::create();
         $order->billingAddress = Address::create();
@@ -16,8 +16,9 @@ final class Order
 
     public static function fromJson(array $json): self
     {
-        $result = self::of($json['reference_number']);
+        $result = self::of($json['id']);
         $result->storeId = $json['store_id'] ?? null;
+        $result->referenceNumber = $json['reference_number'] ?? null;
         $result->paymentMethod = $json['payment_method'] ?? null;
         $result->paymentStatus = $json['payment_status'] ?? null;
         $result->deliveryDate = $json['delivery_date'] ?? null;
@@ -35,7 +36,6 @@ final class Order
         $result->channelPrimaryId = $json['channel_primary_id'] ?? null;
         $result->channelSecondaryId = $json['channel_secondary_id'] ?? null;
         $result->components = $json['components'] ?? null;
-        $result->id = $json['id'] ?? null;
         $result->itemWarehouse = $json['item_warehouse'] ?? null;
         $result->metaData = $json['meta_data'] ?? null;
         $result->quantityInvoiced = $json['quantity_invoiced'] ?? null;
@@ -155,9 +155,9 @@ final class Order
     /** @var ItemSet */
     private $orderItems;
 
-    private function __construct($referenceNumber)
+    private function __construct($id)
     {
-        $this->referenceNumber = $referenceNumber;
+        $this->id = $id;
         $this->taxInfo = TaxInfo::create();
     }
 
