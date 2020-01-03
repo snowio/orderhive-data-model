@@ -32,6 +32,7 @@ final class ListOrder
         $result->channelOrderNumber = $json['channel_order_number'] ?? null;
         $result->referenceNumber = $json['reference_number'] ?? null;
         $result->channelId = $json['channel_id'] ?? null;
+        $result->channelOrderId = $json['channel_order_id'] ?? null;
         $result->storeId = $json['store_id'] ?? null;
         $result->storeName = $json['store_name'] ?? null;
         $result->channelIcon = $json['channel_icon'] ?? null;
@@ -52,7 +53,7 @@ final class ListOrder
         $result->templates = $json['templates'] ?? null;
         $result->printStatus = $json['print_status'] ?? null;
         $result->subUsers = $json['sub_users'] ?? null;
-        $result->tags = $json['tags'] ?? null;
+        $result->tags = OrderTagsListingSet::fromJson($json['tags'] ?? []);
         $result->createdDate = $json['created_date'] ?? null;
         $result->deliveryDate = $json['delivery_date'] ?? null;
         $result->shippingDueDate = $json['shipping_due_date'] ?? null;
@@ -79,6 +80,7 @@ final class ListOrder
             'billing_name' => $this->billingName,
             'shipping_name' => $this->shippingName,
             'channel_order_number' => $this->channelOrderNumber,
+            'channel_order_id' => $this->channelOrderId,
             'reference_number' => $this->referenceNumber,
             'channel_id' => $this->channelId,
             'store_id' => $this->storeId,
@@ -102,7 +104,7 @@ final class ListOrder
             'templates' => $this->templates,
             'print_status' => $this->printStatus,
             'sub_users' => $this->subUsers,
-            'tags' => $this->tags,
+            'tags' => $this->tags->toJson(),
             'created_date' => $this->createdDate,
             'delivery_date' => $this->deliveryDate,
             'shipping_due_date' => $this->shippingDueDate,
@@ -128,6 +130,7 @@ final class ListOrder
         ($this->billingName === $object->billingName) &&
         ($this->shippingName === $object->shippingName) &&
         ($this->channelOrderNumber === $object->channelOrderNumber) &&
+        ($this->channelOrderId === $object->channelOrderId) &&
         ($this->referenceNumber === $object->referenceNumber) &&
         ($this->channelId === $object->channelId) &&
         ($this->storeId === $object->storeId) &&
@@ -177,6 +180,7 @@ final class ListOrder
     private $channelOrderNumber;
     private $referenceNumber;
     private $channelId;
+    private $channelOrderId;
     private $storeId;
     private $storeName;
     private $channelIcon;
@@ -197,6 +201,7 @@ final class ListOrder
     private $templates;
     private $printStatus;
     private $subUsers;
+    /** @var OrderTagsListingSet */
     private $tags;
     private $createdDate;
     private $deliveryDate;
@@ -723,5 +728,17 @@ final class ListOrder
     public function getTags(): OrderTagsListingSet
     {
         return $this->tags;
+    }
+
+    public function withChannelOrderId(?string $channelOrderId): self
+    {
+        $result = clone $this;
+        $result->channelOrderId = $channelOrderId;
+        return $result;
+    }
+
+    public function getChannelOrderId(): ?string
+    {
+        return $this->channelOrderId;
     }
 }
