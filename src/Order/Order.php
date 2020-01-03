@@ -87,7 +87,7 @@ final class Order
         ];
     }
 
-    public function equals($object): bool
+    public function equals(Order $object): bool
     {
         return ($object instanceof Order) &&
         ($this->warehouseId === $object->warehouseId) &&
@@ -202,7 +202,7 @@ final class Order
         return $this->referenceNumber;
     }
 
-    public function withReferenceNumber(string $referenceNumber): self
+    public function withReferenceNumber(?string $referenceNumber): self
     {
         $result = clone $this;
         $result->referenceNumber = $referenceNumber;
@@ -428,7 +428,7 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getGrandTotal()
     {
@@ -447,7 +447,7 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getChannelPrimaryId()
     {
@@ -455,7 +455,7 @@ final class Order
     }
 
     /**
-     * @param mixed $channelSecondaryId
+     * @param int $channelSecondaryId
      * @return Order
      */
     public function withChannelSecondaryId($channelSecondaryId): self
@@ -531,7 +531,7 @@ final class Order
     }
 
     /**
-     * @param mixed $metaData
+     * @param string $metaData
      * @return Order
      */
     public function withMetaData($metaData): self
@@ -542,7 +542,7 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getMetaData()
     {
@@ -599,7 +599,7 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
     public function getTaxValue(): ?float
     {
@@ -675,7 +675,7 @@ final class Order
     }
 
     /**
-     * @return mixed
+     * @return Address
      */
     public function getShippingAddress(): Address
     {

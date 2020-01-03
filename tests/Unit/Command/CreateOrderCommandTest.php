@@ -15,16 +15,18 @@ class CreateOrderCommandTest extends TestCase
     public function testFromJson()
     {
         $createOrderCommand = CreateOrderCommand::fromJson([
-            'reference_number' => 0001,
+            'id' => 123,
+            'reference_number' => '0001',
             'store_id' => 46670,
             'order_status' => OrderStatus::CONFIRM,
             'tax_type' => "EXCLUSIVE",
             'currency' => "USD",
         ]);
 
-        $expected = Order::of(0001)
+        $expected = Order::of(123)
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withStoreId(46670)
+            ->withReferenceNumber('0001')
             ->withCurrency("USD")
             ->withTaxType("EXCLUSIVE");
 
@@ -33,7 +35,7 @@ class CreateOrderCommandTest extends TestCase
 
     public function testToJson()
     {
-        $order = Order::of('28393283')
+        $order = Order::of(28393283)
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withCurrency('USD')
             ->withStoreId(13)
@@ -53,7 +55,7 @@ class CreateOrderCommandTest extends TestCase
         self::assertEquals([
             'order_status' => OrderStatus::CONFIRM,
             'warehouse_id' => null,
-            'reference_number' => '28393283',
+            'reference_number' => null,
             'currency' => 'USD',
             'store_id' => 13,
             'tax_type' => null,
@@ -62,7 +64,7 @@ class CreateOrderCommandTest extends TestCase
             'channel_primary_id' => null,
             'channel_secondary_id' => null,
             'components' => null,
-            'id' => null,
+            'id' => 28393283,
             'item_warehouse' => null,
             'meta_data' => null,
             'quantity_invoiced' => null,
@@ -120,9 +122,7 @@ class CreateOrderCommandTest extends TestCase
                 'name' => null,
                 'state' => null,
                 'zipcode' => null,
-            ],
-            'created_date' => null,
-            'modified_date' => null,
+            ]
         ], $createOrderCommand->toJson());
     }
 }

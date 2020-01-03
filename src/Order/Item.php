@@ -199,10 +199,10 @@ final class Item
     }
 
     /**
-     * @param mixed $referenceNumber
+     * @param string $referenceNumber
      * @return Item
      */
-    public function withReferenceNumber($referenceNumber)
+    public function withReferenceNumber(?string $referenceNumber)
     {
         $result = clone $this;
         $result->referenceNumber = $referenceNumber;
@@ -210,9 +210,9 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    public function getReferenceNumber()
+    public function getReferenceNumber():?string
     {
         return $this->referenceNumber;
     }

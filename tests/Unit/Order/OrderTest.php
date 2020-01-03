@@ -150,7 +150,7 @@ class OrderTest extends TestCase
 
     public function testWithers()
     {
-        $order = Order::of('22')
+        $order = Order::of('1')
             ->withStoreId(46670)
             ->withTaxType('EXCLUSIVE')
             ->withPaymentStatus(PaymentStatus::NOT_PAID)
@@ -161,7 +161,7 @@ class OrderTest extends TestCase
             ->withGrandTotal(288.51)
             ->withSyncCreated('2019-03-14 08:25:13')
             ->withRemark('remark')
-            ->withId(1)
+            ->withReferenceNumber('22')
             ->withMetaData('test')
             ->withChannelId(13)
             ->withContactId(52308715)

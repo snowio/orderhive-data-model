@@ -12,25 +12,28 @@ class UpdateOrderCommandTest extends TestCase
     public function testFromJson()
     {
         $updateOrderCommand = UpdateOrderCommand::fromJson([
-            'reference_number' => 28393283,
+            'id' => 123,
+            'reference_number' => '28393283',
             'store_id' => 46670,
             'order_status' => OrderStatus::SHIP,
             'tax_type' => "EXCLUSIVE",
             'currency' => "USD"
         ]);
 
-        $expected = Order::of(28393283)
-            ->withOrderStatus(OrderStatus::SHIP)
+        $expected = Order::of(123)
+            ->withReferenceNumber('28393283')
             ->withStoreId(46670)
-            ->withCurrency("USD")
-            ->withTaxType("EXCLUSIVE");
+            ->withOrderStatus(OrderStatus::SHIP)
+            ->withTaxType("EXCLUSIVE")
+            ->withCurrency("USD");
 
         self::assertTrue($expected->equals($updateOrderCommand->getOrder()));
     }
 
     public function testToJson()
     {
-        $order = Order::of(28393283)
+        $order = Order::of(12)
+            ->withReferenceNumber('28393283')
             ->withOrderStatus(OrderStatus::SHIP)
             ->withStoreId(46670)
             ->withCurrency("USD")
@@ -58,7 +61,7 @@ class UpdateOrderCommandTest extends TestCase
             'channel_primary_id' => null,
             'channel_secondary_id' => null,
             'components' => null,
-            'id' => null,
+            'id' => 12,
             'item_warehouse' => null,
             'meta_data' => null,
             'quantity_invoiced' => null,
@@ -103,9 +106,7 @@ class UpdateOrderCommandTest extends TestCase
                 'name' => null,
                 'state' => null,
                 'zipcode' => null,
-            ],
-            'created_date' => null,
-            'modified_date' => null,
+            ]
         ], $updateOrderCommand->toJson());
     }
 }
