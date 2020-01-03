@@ -34,7 +34,6 @@ final class Order
         $result->syncCreated = $json['sync_created'] ?? null;
         $result->remark = $json['remark'] ?? null;
         $result->channelId = $json['channel_id'] ?? null;
-        $result->channelOrderId = $json['channel_order_id'] ?? null;
         $result->contactId = $json['contact_id'] ?? null;
         $result->baseCurrencyRate = $json['base_currency_rate'] ?? null;
         $result->baseCurrency = $json['base_currency'] ?? null;
@@ -65,7 +64,6 @@ final class Order
             'grand_total' => $this->grandTotal,
             'sync_created' => $this->syncCreated,
             'channel_id' => $this->channelId,
-            'channel_order_id' => $this->channelOrderId,
             'contact_id' => $this->contactId,
             'base_currency_rate' => $this->baseCurrencyRate,
             'base_currency' => $this->baseCurrency,
@@ -758,25 +756,6 @@ final class Order
     public function getWarehouseId(): int
     {
         return $this->warehouseId;
-    }
-
-    /**
-     * @param int|null $channelOrderId
-     * @return Order
-     */
-    public function withChannelOrderId(?int $channelOrderId): self
-    {
-        $result = clone $this;
-        $result->channelOrderId = $channelOrderId;
-        return $result;
-    }
-
-    /**
-     * @return int|null
-     */
-    public function getChannelOrderId(): ?int
-    {
-        return $this->channelOrderId;
     }
 
     /**

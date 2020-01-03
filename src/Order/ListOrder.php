@@ -16,7 +16,6 @@ final class ListOrder
     {
         $result = self::of($json['id']);
         $result->listOrderItems = ListOrderItemSet::fromJson($json['list_order_items'] ?? []);
-        $result->channelOrderId = $json['channel_order_id'] ?? null;
         $result->contactId = $json['contact_id'] ?? null;
         $result->isBackOrder = $json['is_back_order'] ?? null;
         $result->shippingService = $json['shipping_service'] ?? null;
@@ -66,7 +65,6 @@ final class ListOrder
     {
         return [
             'id' => $this->id,
-            'channel_order_id' => $this->channelOrderId,
             'contact_id' => $this->contactId,
             'is_back_order' => $this->isBackOrder,
             'shipping_service' => $this->shippingService,
@@ -116,7 +114,6 @@ final class ListOrder
     {
         return ($object instanceof Order) &&
         ($this->warehouseId === $object->warehouseId) &&
-        ($this->channelOrderId === $object->channelOrderId) &&
         ($this->contactId === $object->contactId) &&
         ($this->isBackOrder === $object->isBackOrder) &&
         ($this->shippingService === $object->shippingService) &&
@@ -164,7 +161,6 @@ final class ListOrder
     private $id;
     /** @var ListOrderItemSet */
     private $listOrderItems;
-    private $channelOrderId;
     private $contactId;
     private $isBackOrder;
     private $shippingService;
@@ -355,18 +351,6 @@ final class ListOrder
     public function getWarehouseId(): int
     {
         return $this->warehouseId;
-    }
-
-    public function withChannelOrderId(?int $channelOrderId): self
-    {
-        $result = clone $this;
-        $result->channelOrderId = $channelOrderId;
-        return $result;
-    }
-
-    public function getChannelOrderId(): ?int
-    {
-        return $this->channelOrderId;
     }
 
     public function withIsBackOrder(?bool $isBackOrder): self

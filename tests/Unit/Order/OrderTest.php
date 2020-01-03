@@ -150,7 +150,7 @@ class OrderTest extends TestCase
 
     public function testWithers()
     {
-        $order = Order::of('1')
+        $order = Order::of(1)
             ->withStoreId(46670)
             ->withTaxType('EXCLUSIVE')
             ->withPaymentStatus(PaymentStatus::NOT_PAID)
@@ -234,7 +234,7 @@ class OrderTest extends TestCase
                     ->withContactNumber('xxxxxxxxx')
             );
 
-        self::assertEquals($this->getJsonData('22'), $order->toJson());
+        self::assertEquals($this->getJsonData($refNumber='22'), $order->toJson());
     }
 
     public function testGetters()
