@@ -14,6 +14,10 @@ final class Order
         return $order;
     }
 
+    /**
+     * @param array $json
+     * @return Order
+     */
     public static function fromJson(array $json): self
     {
         $result = self::of($json['id']);
@@ -30,6 +34,7 @@ final class Order
         $result->syncCreated = $json['sync_created'] ?? null;
         $result->remark = $json['remark'] ?? null;
         $result->channelId = $json['channel_id'] ?? null;
+        $result->channelOrderId = $json['channel_order_id'] ?? null;
         $result->contactId = $json['contact_id'] ?? null;
         $result->baseCurrencyRate = $json['base_currency_rate'] ?? null;
         $result->baseCurrency = $json['base_currency'] ?? null;
@@ -60,6 +65,7 @@ final class Order
             'grand_total' => $this->grandTotal,
             'sync_created' => $this->syncCreated,
             'channel_id' => $this->channelId,
+            'channel_order_id' => $this->channelOrderId,
             'contact_id' => $this->contactId,
             'base_currency_rate' => $this->baseCurrencyRate,
             'base_currency' => $this->baseCurrency,
@@ -103,6 +109,7 @@ final class Order
         ($this->syncCreated === $object->syncCreated) &&
         ($this->remark === $object->remark) &&
         ($this->channelId === $object->channelId) &&
+        ($this->channelOrderId === $object->channelOrderId) &&
         ($this->contactId === $object->contactId) &&
         ($this->baseCurrencyRate === $object->baseCurrencyRate) &&
         ($this->baseCurrency === $object->baseCurrency) &&
@@ -134,6 +141,7 @@ final class Order
     private $syncCreated;
     private $remark;
     private $channelId;
+    private $channelOrderId;
     private $contactId;
     private $baseCurrencyRate;
     private $baseCurrency;
@@ -151,6 +159,38 @@ final class Order
     private $weightUnit;
     private $shippingAddress;
     private $billingAddress;
+    private $isBackOrder;
+    private $shippingService;
+    private $shippingCarrier;
+    private $displayNumber;
+    private $invoiceCreated;
+    private $customStatus;
+    private $billingName;
+    private $shippingName;
+    private $channelOrderNumber;
+    private $storeName;
+    private $channelIcon;
+    private $channelName;
+    private $total;
+    private $commentCount;
+    private $isAnyUnread;
+    private $partiallyCancel;
+    private $listOrderItems;
+    private $orderItemsSize;
+    private $totalQtyOrdered;
+    private $actionRequired;
+    private $fulfillmentStatus;
+    private $customFieldsListing;
+    private $presetId;
+    private $templates;
+    private $printStatus;
+    private $subUsers;
+    private $tags;
+    private $createdDate;
+    private $shippingDueDate;
+    private $modifiedDate;
+
+
 
     /** @var ItemSet */
     private $orderItems;
@@ -718,5 +758,347 @@ final class Order
     public function getWarehouseId(): int
     {
         return $this->warehouseId;
+    }
+
+    /**
+     * @param int|null $channelOrderId
+     * @return Order
+     */
+    public function withChannelOrderId(?int $channelOrderId): self
+    {
+        $result = clone $this;
+        $result->channelOrderId = $channelOrderId;
+        return $result;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getChannelOrderId(): ?int
+    {
+        return $this->channelOrderId;
+    }
+
+    /**
+     * @param bool|null $isBackOrder
+     * @return Order
+     */
+    public function withIsBackOrder(?bool $isBackOrder): self
+    {
+        $result = clone $this;
+        $result->isBackOrder = $isBackOrder;
+        return $result;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getIsBackOrder(): ?bool
+    {
+        return $this->isBackOrder;
+    }
+
+    /**
+     * @param string $shippingService
+     * @return Order
+     */
+    public function withShippingService(?string $shippingService): self
+    {
+        $result = clone $this;
+        $result->shippingService = $shippingService;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShippingService(): ?string
+    {
+        return $this->shippingService;
+    }
+
+    /**
+     * @param string|null $shippingCarrier
+     * @return Order
+     */
+    public function withShippingCarrier(?string $shippingCarrier): self
+    {
+        $result = clone $this;
+        $result->shippingCarrier = $shippingCarrier;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShippingCarrier(): ?string
+    {
+        return $this->shippingCarrier;
+    }
+
+    /**
+     * @param string|null $displayNumber
+     * @return Order
+     */
+    public function withDisplayNumber(?string $displayNumber): self
+    {
+        $result = clone $this;
+        $result->displayNumber = $displayNumber;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDisplayNumber(): ?string
+    {
+        return $this->displayNumber;
+    }
+
+    /**
+     * @param bool|null $invoiceCreated
+     * @return Order
+     */
+    public function withInvoiceCreated(?bool $invoiceCreated): self
+    {
+        $result = clone $this;
+        $result->invoiceCreated = $invoiceCreated;
+        return $result;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getInvoiceCreated(): ?bool
+    {
+        return $this->invoiceCreated;
+    }
+
+    /**
+     * @param int|null $customStatus
+     * @return Order
+     */
+    public function withCustomStatus(?int $customStatus): self
+    {
+        $result = clone $this;
+        $result->customStatus = $customStatus;
+        return $result;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCustomStatus(): ?int
+    {
+        return $this->customStatus;
+    }
+
+    /**
+     * @param string|null $billingName
+     * @return Order
+     */
+    public function withBillingName(?string $billingName): self
+    {
+        $result = clone $this;
+        $result->billingName = $billingName;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBillingName(): ?string
+    {
+        return $this->billingName;
+    }
+
+    /**
+     * @param string|null $shippingName
+     * @return Order
+     */
+    public function withShippingName(?string $shippingName): self
+    {
+        $result = clone $this;
+        $result->shippingName = $shippingName;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getShippingName(): ?string
+    {
+        return $this->shippingName;
+    }
+
+    /**
+     * @param string|null $channelOrderNumber
+     * @return Order
+     */
+    public function withChannelOrderNumber(?string $channelOrderNumber): self
+    {
+        $result = clone $this;
+        $result->channelOrderNumber = $channelOrderNumber;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getChannelOrderNumber(): ?string
+    {
+        return $this->channelOrderNumber;
+    }
+
+    /**
+     * @param string|null $storeName
+     * @return Order
+     */
+    public function withStoreName(?string $storeName): self
+    {
+        $result = clone $this;
+        $result->storeName = $storeName;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStoreName(): ?string
+    {
+        return $this->storeName;
+    }
+
+    /**
+     * @param string|null $channelIcon
+     * @return Order
+     */
+    public function withChannelIcon(?string $channelIcon): self
+    {
+        $result = clone $this;
+        $result->channelIcon = $channelIcon;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getChannelIcon(): ?string
+    {
+        return $this->channelIcon;
+    }
+
+    /**
+     * @param string|null $channelName
+     * @return Order
+     */
+    public function withChannelName(?string $channelName): self
+    {
+        $result = clone $this;
+        $result->channelName = $channelName;
+        return $result;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getChannelName(): ?string
+    {
+        return $this->channelName;
+    }
+
+    /**
+     * @param float $total
+     * @return Order
+     */
+    public function withTotal(float $total): self
+    {
+        $result = clone $this;
+        $result->total = $total;
+        return $result;
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotal(): float
+    {
+        return $this->total;
+    }
+
+    /**
+     * @param int $commentCount
+     * @return Order
+     */
+    public function withCommentCount(int $commentCount): self
+    {
+        $result = clone $this;
+        $result->commentCount = $commentCount;
+        return $result;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCommentCount(): int
+    {
+        return $this->commentCount;
+    }
+
+    /**
+     * @param bool|null $isAnyUnread
+     * @return Order
+     */
+    public function withIsAnyUnread(?bool $isAnyUnread): self
+    {
+        $result = clone $this;
+        $result->isAnyUnread = $isAnyUnread;
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsAnyUnread(): ?bool
+    {
+        return $this->isAnyUnread;
+    }
+
+    /**
+     * @param bool|null $partiallyCancel
+     * @return Order
+     */
+    public function withPartiallyCancel(?bool $partiallyCancel): self
+    {
+        $result = clone $this;
+        $result->partiallyCancel = $partiallyCancel;
+        return $result;
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function getPartiallyCancel(): ?bool
+    {
+        return $this->partiallyCancel;
+    }
+
+    /**
+     * @param mixed $listOrderItems
+     * @return Order
+     */
+    public function withListOrderItems($listOrderItems)
+    {
+        $result = clone $this;
+        $result->listOrderItems = $listOrderItems;
+        return $result;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getListOrderItems()
+    {
+        return $this->listOrderItems;
     }
 }
