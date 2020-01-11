@@ -4,6 +4,7 @@ namespace SnowIO\OrderHiveDataModel\Test\Unit\Command;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\OrderHiveDataModel\Command\UpdateOrderCommand;
+use SnowIO\OrderHiveDataModel\Order\EditOrder;
 use SnowIO\OrderHiveDataModel\Order\Order;
 use SnowIO\OrderHiveDataModel\Order\OrderStatus;
 
@@ -14,67 +15,42 @@ class UpdateOrderCommandTest extends TestCase
         $updateOrderCommand = UpdateOrderCommand::fromJson([
             'id' => 123,
             'reference_number' => '28393283',
-            'store_id' => 46670,
-            'order_status' => OrderStatus::SHIP,
-            'tax_type' => "EXCLUSIVE",
-            'currency' => "USD"
+            'contact_id' => 123
         ]);
 
-        $expected = Order::of(123)
+        $expected = EditOrder::of(123)
             ->withReferenceNumber('28393283')
-            ->withStoreId(46670)
-            ->withOrderStatus(OrderStatus::SHIP)
-            ->withTaxType("EXCLUSIVE")
-            ->withCurrency("USD");
+            ->withContactId(123);
 
-        self::assertTrue($expected->equals($updateOrderCommand->getOrder()));
+        self::assertTrue($expected->equals($updateOrderCommand->getEditOrder()));
     }
 
     public function testToJson()
     {
-        $order = Order::of(12)
+        $order = EditOrder::of(12)
             ->withReferenceNumber('28393283')
-            ->withOrderStatus(OrderStatus::SHIP)
-            ->withStoreId(46670)
-            ->withCurrency("USD")
-            ->withTaxType("EXCLUSIVE");
+            ->withContactId(123)
+            ->withChannelOrderNumber('xx1')
+            ->withPaymentMethod('pay')
+            ->withSalesPersonId(1)
+            ->withShippingCarrier('x')
+            ->withShippingService('y')
+            ->withPresetId('1');
 
         $updateOrderCommand = UpdateOrderCommand::of($order);
 
         self::assertEquals([
+            'contact_id' => 123,
+            'channel_order_number' => 'xx1',
+            'payment_method' => 'pay',
             'reference_number' => 28393283,
-            'order_status' => OrderStatus::SHIP,
-            'store_id' => 46670,
-            'warehouse_id' => null,
-            'currency' => "USD",
-            'tax_type' => "EXCLUSIVE",
-            'payment_status' => null,
-            'payment_method' => null,
-            'delivery_date' => null,
-            'grand_total' => null,
-            'sync_created' => null,
-            'channel_id' => null,
-            'contact_id' => null,
-            'base_currency_rate' => null,
-            'base_currency' => null,
+            'sales_person_id' => 1,
             'remark' => null,
-            'channel_primary_id' => null,
-            'channel_secondary_id' => null,
-            'components' => null,
-            'id' => 12,
-            'item_warehouse' => null,
-            'meta_data' => null,
-            'quantity_invoiced' => null,
-            'tax_info' => [
-                'id' => null,
-                'tax_rate' => null,
-                'groups' => [],
-            ],
-            'tax_value' => null,
-            'update_type' => null,
-            'weight' => null,
-            'weight_unit' => null,
-            'order_items' => [],
+            'delivery_date' => null,
+            'shipping_carrier' => 'x',
+            'shipping_service' => 'y',
+            'preset_id' => '1',
+
             'shipping_address' => [
                 'address1' => null,
                 'address2' => null,
@@ -106,7 +82,8 @@ class UpdateOrderCommandTest extends TestCase
                 'name' => null,
                 'state' => null,
                 'zipcode' => null,
-            ]
+            ],
+            'order_items' => [],
         ], $updateOrderCommand->toJson());
     }
 }

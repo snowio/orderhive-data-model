@@ -2,36 +2,36 @@
 declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Command;
 
-use SnowIO\OrderHiveDataModel\Order\Order;
+use SnowIO\OrderHiveDataModel\Order\EditOrder;
 
 final class UpdateOrderCommand
 {
-    public static function of(Order $order): self
+    public static function of(EditOrder $order): self
     {
         $orderUpdateCommand = new self;
-        $orderUpdateCommand->order = $order;
+        $orderUpdateCommand->editOrder = $order;
         return $orderUpdateCommand;
     }
 
     public static function fromJson(array $json): self
     {
         $orderUpdateCommand = new self;
-        $orderUpdateCommand->order = Order::fromJson($json);
+        $orderUpdateCommand->editOrder = EditOrder::fromJson($json);
         return $orderUpdateCommand;
     }
 
-    public function getOrder(): Order
+    public function getEditOrder(): EditOrder
     {
-        return $this->order;
+        return $this->editOrder;
     }
 
     public function toJson(): array
     {
-        return $this->order->toJson();
+        return $this->editOrder->toJson();
     }
 
-    /** @var  */
-    private $order;
+    /** @var EditOrder */
+    private $editOrder;
 
     private function __construct()
     {

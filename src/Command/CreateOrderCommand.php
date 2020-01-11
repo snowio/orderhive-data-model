@@ -2,36 +2,36 @@
 declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Command;
 
-use SnowIO\OrderHiveDataModel\Order\Order;
+use SnowIO\OrderHiveDataModel\Order\CreateOrder;
 
 final class CreateOrderCommand
 {
-    public static function of(Order $order): self
+    public static function of(CreateOrder $createOrder): self
     {
         $createOrderCommand = new self;
-        $createOrderCommand->order = $order;
+        $createOrderCommand->createOrder = $createOrder;
         return $createOrderCommand;
     }
 
     public static function fromJson(array $json): self
     {
         $createOrderCommand = new self;
-        $createOrderCommand->order = Order::fromJson($json);
+        $createOrderCommand->createOrder = CreateOrder::fromJson($json);
         return $createOrderCommand;
     }
 
-    public function getOrder()
+    public function getCreateOrder()
     {
-        return $this->order;
+        return $this->createOrder;
     }
 
     public function toJson(): array
     {
-        return $this->order->toJson();
+        return $this->createOrder->toJson();
     }
 
-    /** @var Order $order */
-    private $order;
+    /** @var CreateOrder $order */
+    private $createOrder;
 
     private function __construct()
     {

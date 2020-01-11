@@ -4,6 +4,7 @@ namespace SnowIO\OrderHiveDataModel\Test\Unit\Command;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\OrderHiveDataModel\Command\CreateOrderCommand;
+use SnowIO\OrderHiveDataModel\Order\CreateOrder;
 use SnowIO\OrderHiveDataModel\Order\Order;
 use SnowIO\OrderHiveDataModel\Order\OrderStatus;
 use SnowIO\OrderHiveDataModel\Order\TaxInfo;
@@ -23,69 +24,36 @@ class CreateOrderCommandTest extends TestCase
             'currency' => "USD",
         ]);
 
-        $expected = Order::of(123)
+        $expected = CreateOrder::of('0001')
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withStoreId(46670)
-            ->withReferenceNumber('0001')
             ->withCurrency("USD")
             ->withTaxType("EXCLUSIVE");
 
-        self::assertEquals($expected, $createOrderCommand->getOrder());
+        self::assertEquals($expected, $createOrderCommand->getCreateOrder());
     }
 
     public function testToJson()
     {
-        $order = Order::of(28393283)
+        $order = CreateOrder::of(28393283)
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withCurrency('USD')
-            ->withStoreId(13)
-            ->withTaxInfo(
-                TaxInfo::of(1)
-                    ->withTaxRate(1)
-                    ->withGroups(TaxInfoGroupSet::of([
-                        TaxInfoGroup::of(1)
-                            ->withName('test')
-                            ->withTaxRate(2)
-                            ->withTotalTaxValue(0)
-                    ]))
-            );
+            ->withStoreId(13);
 
         $createOrderCommand = CreateOrderCommand::of($order);
 
         self::assertEquals([
             'order_status' => OrderStatus::CONFIRM,
             'warehouse_id' => null,
-            'reference_number' => null,
+            'reference_number' => '28393283',
             'currency' => 'USD',
             'store_id' => 13,
             'tax_type' => null,
             'payment_status' => null,
             'payment_method' => null,
-            'channel_primary_id' => null,
-            'channel_secondary_id' => null,
-            'components' => null,
-            'id' => 28393283,
-            'item_warehouse' => null,
-            'meta_data' => null,
-            'quantity_invoiced' => null,
-            'tax_info' => [
-                'id' => 1,
-                'tax_rate' => 1,
-                'groups' => [[
-                    'id' => 1,
-                    'name' => 'test',
-                    'tax_rate' => 2,
-                    'total_tax_value' => 0
-                ]]
-            ],
-            'tax_value' => null,
-            'update_type' => null,
-            'weight' => null,
-            'weight_unit' => null,
             'delivery_date' => null,
             'grand_total' => null,
             'sync_created' => null,
-            'channel_id' => null,
             'contact_id' => null,
             'base_currency_rate' => null,
             'base_currency' => null,

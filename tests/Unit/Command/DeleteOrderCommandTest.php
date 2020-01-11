@@ -20,15 +20,10 @@ class DeleteOrderCommandTest extends TestCase
 
     public function testToJson()
     {
-        $order = Order::of(28393283)
-            ->withId(111)
-            ->withOrderStatus(OrderStatus::SHIP)
-            ->withStoreId(46670);
-
-        $deleteCommand = DeleteOrderCommand::of($order);
+        $deleteCommand = DeleteOrderCommand::of([1,2,3]);
 
         self::assertEquals([
-            'sales_orders_id' => [111],
+            'sales_orders_id' => [1,2,3],
         ], $deleteCommand->toJson());
     }
 }

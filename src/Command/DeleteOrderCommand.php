@@ -6,29 +6,29 @@ use SnowIO\OrderHiveDataModel\Order\Order;
 
 final class DeleteOrderCommand
 {
-    public static function of(Order $order): self
+    public static function of(array $orderIds): self
     {
         $deleteCommand = new self;
-        $deleteCommand->salesOrdersId[] = $order->getId();
+        $deleteCommand->orderIds = $orderIds;
         return $deleteCommand;
     }
 
     public static function fromJson(array $json): self
     {
         $deleteCommand = new self;
-        $deleteCommand->salesOrdersId = $json['sales_orders_id'];
+        $deleteCommand->orderIds = $json['sales_orders_id'];
         return $deleteCommand;
     }
 
     public function toJson(): array
     {
         return [
-            'sales_orders_id' => $this->salesOrdersId
+            'sales_orders_id' => $this->orderIds
         ];
     }
 
     /** @var  */
-    private $salesOrdersId;
+    private $orderIds;
 
     private function __construct()
     {
