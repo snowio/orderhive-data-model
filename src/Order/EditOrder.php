@@ -4,7 +4,7 @@ namespace SnowIO\OrderHiveDataModel\Order;
 
 final class EditOrder
 {
-    public static function of($id): self
+    public static function of(int $id): self
     {
         $order = new self($id);
         $order->orderItems = ItemSet::create();
@@ -116,7 +116,7 @@ final class EditOrder
         return $result;
     }
 
-    public function withPaymentMethod(?string $paymentMethod)
+    public function withPaymentMethod(?string $paymentMethod): self
     {
         $result = clone $this;
         $result->paymentMethod = $paymentMethod;
@@ -128,14 +128,14 @@ final class EditOrder
         return $this->paymentMethod;
     }
 
-    public function withDeliveryDate($deliveryDate)
+    public function withDeliveryDate(?string $deliveryDate): self
     {
         $result = clone $this;
         $result->deliveryDate = $deliveryDate;
         return $result;
     }
 
-    public function getDeliveryDate()
+    public function getDeliveryDate(): ?string
     {
         return $this->deliveryDate;
     }
@@ -258,5 +258,17 @@ final class EditOrder
     public function getPresetId(): ?string
     {
         return $this->presetId;
+    }
+
+    public function withId(int $id): self
+    {
+        $result = clone $this;
+        $result->id = $id;
+        return $result;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 }
