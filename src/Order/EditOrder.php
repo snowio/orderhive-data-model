@@ -35,6 +35,7 @@ final class EditOrder
     public function toJson(): array
     {
         return [
+            'id' => $this->id,
             'contact_id' => $this->contactId,
             'channel_order_number' => $this->channelOrderNumber,
             'payment_method' => $this->paymentMethod,

@@ -43,14 +43,14 @@ class UpdateOrderCommandTest extends TestCase
             'contact_id' => 123,
             'channel_order_number' => 'xx1',
             'payment_method' => 'pay',
-            'reference_number' => 28393283,
+            'reference_number' => '28393283',
             'sales_person_id' => 1,
             'remark' => null,
             'delivery_date' => null,
             'shipping_carrier' => 'x',
             'shipping_service' => 'y',
             'preset_id' => '1',
-
+            'id' => 12,
             'shipping_address' => [
                 'address1' => null,
                 'address2' => null,
