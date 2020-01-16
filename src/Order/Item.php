@@ -278,7 +278,7 @@ final class Item
      * @param float $discountPercent
      * @return Item
      */
-    public function withDiscountPercent($discountPercent): self
+    public function withDiscountPercent(?float $discountPercent): self
     {
         $result = clone $this;
         $result->discountPercent = $discountPercent;
@@ -288,7 +288,7 @@ final class Item
     /**
      * @return float
      */
-    public function getDiscountPercent(): float
+    public function getDiscountPercent(): ?float
     {
         return $this->discountPercent;
     }
@@ -313,10 +313,10 @@ final class Item
     }
 
     /**
-     * @param string $discountValue
+     * @param float|null $discountValue
      * @return Item
      */
-    public function withDiscountValue(?string $discountValue): self
+    public function withDiscountValue(?float $discountValue): self
     {
         $result = clone $this;
         $result->discountValue = $discountValue;
@@ -324,9 +324,9 @@ final class Item
     }
 
     /**
-     * @return string|null
+     * @return float|null
      */
-    public function getDiscountValue(): ?string
+    public function getDiscountValue(): ?float
     {
         return $this->discountValue;
     }
@@ -408,10 +408,10 @@ final class Item
     }
 
     /**
-     * @param float $price
+     * @param float|null $price
      * @return Item
      */
-    public function withPrice(float $price): self
+    public function withPrice(?float $price): self
     {
         $result = clone $this;
         $result->price = $price;
@@ -421,7 +421,7 @@ final class Item
     /**
      * @return mixed
      */
-    public function getPrice(): float
+    public function getPrice(): ?float
     {
         return $this->price;
     }
@@ -579,10 +579,10 @@ final class Item
     }
 
     /**
-     * @param mixed $rowTotal
+     * @param float|null $rowTotal
      * @return Item
      */
-    public function withRowTotal($rowTotal): self
+    public function withRowTotal(?float $rowTotal): self
     {
         $result = clone $this;
         $result->rowTotal = $rowTotal;
@@ -590,9 +590,9 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getRowTotal()
+    public function getRowTotal(): ?float
     {
         return $this->rowTotal;
     }
