@@ -195,7 +195,7 @@ class OrderTest extends TestCase
                     ->withTaxValue(1.11)
                     ->withUpdateType('test')
                     ->withDiscountPercent(20)
-                    ->withDiscountValue('72.128')
+                    ->withDiscountValue(72.128)
                     ->withDiscountType('PERCENT')
                     ->withQuantityInvoiced(1)
             ]))
@@ -313,7 +313,7 @@ class OrderTest extends TestCase
                 ->withWeightUnit('test')
                 ->withDiscountPercent(20)
                 ->withDiscountType('PERCENT')
-                ->withDiscountValue('72.128')
+                ->withDiscountValue(72.128)
         ]));
     }
 }
