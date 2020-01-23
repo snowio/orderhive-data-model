@@ -4,7 +4,7 @@ namespace SnowIO\OrderHiveDataModel\Order;
 
 final class Item
 {
-    public static function of($itemId, $quantityOrdered): self
+    public static function of($itemId, int $quantityOrdered): self
     {
         $item = (new self($itemId, $quantityOrdered));
         $item->productImage = ProductImage::create();
@@ -465,6 +465,14 @@ final class Item
     }
 
     /**
+     * @return int
+     */
+    public function getQuantityOrdered(): int
+    {
+        return $this->quantityOrdered;
+    }
+
+    /**
      * @param string $weightUnit
      * @return Item
      */
@@ -541,10 +549,10 @@ final class Item
     }
 
     /**
-     * @param mixed $taxPercent
+     * @param float|null $taxPercent
      * @return Item
      */
-    public function withTaxPercent($taxPercent): self
+    public function withTaxPercent(?float $taxPercent): self
     {
         $result = clone $this;
         $result->taxPercent = $taxPercent;
@@ -552,9 +560,9 @@ final class Item
     }
 
     /**
-     * @return mixed
+     * @return float|null
      */
-    public function getTaxPercent()
+    public function getTaxPercent(): ?float
     {
         return $this->taxPercent;
     }

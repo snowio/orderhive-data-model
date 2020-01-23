@@ -279,6 +279,13 @@ class OrderTest extends TestCase
         self::assertEquals($order->getUpdateType(), null);
         self::assertEquals($order->getWeight(), null);
         self::assertEquals($order->getWeightUnit(), null);
+
+        foreach($order->getOrderItems() as $item){
+            self::assertSame($item->getQuantityOrdered(), 1);
+            self::assertSame($item->getPrice(), 322.0);
+            self::assertSame($item->getDiscountValue(), 0);
+        }
+
         self::assertEquals($order->getOrderItems(), ItemSet::of([
             Item::of(123, 1)
                 ->withId(9)
