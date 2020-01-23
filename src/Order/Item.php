@@ -23,7 +23,7 @@ final class Item
         $result->barcode = $json['barcode'] ?? null;
         $result->discountPercent = $json['discount_percent'] ?? null;
         $result->discountType = $json['discount_type'] ?? null;
-        $result->discountValue = $json['discount_value'] ?? null;
+        $result->discountValue = (float) $json['discount_value'] ?? null;
         $result->id = $json['id'] ?? null;
         $result->itemWarehouse = $json['item_warehouse'] ?? null;
         $result->metaData = $json['meta_data'] ?? null;

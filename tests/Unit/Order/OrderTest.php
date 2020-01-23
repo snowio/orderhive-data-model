@@ -283,7 +283,7 @@ class OrderTest extends TestCase
         foreach($order->getOrderItems() as $item){
             self::assertSame($item->getQuantityOrdered(), 1);
             self::assertSame($item->getPrice(), 322.0);
-            self::assertSame($item->getDiscountValue(), 0);
+            self::assertSame($item->getDiscountValue(), 72.128);
         }
 
         self::assertEquals($order->getOrderItems(), ItemSet::of([
