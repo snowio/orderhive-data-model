@@ -4,7 +4,7 @@ namespace SnowIO\OrderHiveDataModel\Command;
 
 use SnowIO\OrderHiveDataModel\Product\UpdateStock;
 
-final class ProductUpdateStockCommand
+final class UpdateStockCommand
 {
     public static function of(UpdateStock $updateStock): self
     {
