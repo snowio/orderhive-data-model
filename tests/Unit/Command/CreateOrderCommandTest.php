@@ -20,11 +20,13 @@ class CreateOrderCommandTest extends TestCase
             'reference_number' => '0001',
             'store_id' => 46670,
             'order_status' => OrderStatus::CONFIRM,
+            'channel_order_number' => 'test',
             'tax_type' => "EXCLUSIVE",
             'currency' => "USD",
         ]);
 
         $expected = CreateOrder::of('0001')
+            ->withChannelOrderNumber('test')
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withStoreId(46670)
             ->withCurrency("USD")
@@ -52,6 +54,7 @@ class CreateOrderCommandTest extends TestCase
             'payment_status' => null,
             'payment_method' => null,
             'delivery_date' => null,
+            'channel_order_number' => null,
             'grand_total' => null,
             'sync_created' => null,
             'contact_id' => null,

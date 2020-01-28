@@ -28,6 +28,7 @@ final class CreateOrder
         $result->taxType = $json['tax_type'] ?? null;
         $result->currency = $json['currency'] ?? null;
         $result->orderStatus = $json['order_status'] ?? null;
+        $result->channelOrderNumber = $json['channel_order_number'] ?? null;
         $result->grandTotal = $json['grand_total'] ?? null;
         $result->syncCreated = $json['sync_created'] ?? null;
         $result->remark = $json['remark'] ?? null;
@@ -55,6 +56,7 @@ final class CreateOrder
             'remark' => $this->remark,
             'reference_number' => $this->referenceNumber,
             'currency' => $this->currency,
+            'channel_order_number' => $this->channelOrderNumber,
             'order_status' => $this->orderStatus,
             'store_id' => $this->storeId,
             'tax_type' => $this->taxType,
@@ -81,6 +83,7 @@ final class CreateOrder
         ($this->remark === $object->remark) &&
         ($this->channelOrderId === $object->channelOrderId) &&
         ($this->contactId === $object->contactId) &&
+        ($this->channelOrderNumber === $object->channelOrderNumber) &&
         ($this->baseCurrencyRate === $object->baseCurrencyRate) &&
         ($this->baseCurrency === $object->baseCurrency) &&
         ($this->customFields === $object->customFields) &&
@@ -103,6 +106,7 @@ final class CreateOrder
     private $deliveryDate;
     private $displayNumber;
     private $grandTotal;
+    private $channelOrderNumber;
     /** @var ItemSet */
     private $orderItems;
     private $orderStatus;
@@ -139,6 +143,11 @@ final class CreateOrder
     public function getOrderStatus(): ?string
     {
         return $this->orderStatus;
+    }
+
+    public function getChannelOrderNumber(): ?string
+    {
+        return $this->channelOrderNumber;
     }
 
     public function withOrderStatus(string $orderStatus): self
@@ -392,6 +401,13 @@ final class CreateOrder
     {
         $result = clone $this;
         $result->customFields = $customFields;
+        return $result;
+    }
+
+    public function withChannelOrderNumber(string $channelOrderNumber): self
+    {
+        $result = clone $this;
+        $result->channelOrderNumber = $channelOrderNumber;
         return $result;
     }
 
