@@ -37,7 +37,7 @@ class CreateOrderCommandTest extends TestCase
 
     public function testToJson()
     {
-        $order = CreateOrder::of(28393283)
+        $order = CreateOrder::of('28393283')
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withCurrency('USD')
             ->withStoreId(13);
@@ -62,6 +62,7 @@ class CreateOrderCommandTest extends TestCase
             'base_currency' => null,
             'remark' => null,
             'order_items' => [],
+            'order_extra_items' => [],
             'shipping_address' => [
                 'address1' => null,
                 'address2' => null,

@@ -2,12 +2,15 @@
 declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Order;
 
+use SwoonTest\Magento\Model\ShippingAddress;
+
 final class CreateOrder
 {
     public static function of($referenceNumber): self
     {
         $order = new self($referenceNumber);
         $order->orderItems = ItemSet::create();
+        $order->orderExtraItems = ExtraItemSet::create();
         $order->shippingAddress = Address::create();
         $order->billingAddress = Address::create();
         return $order;
@@ -38,6 +41,7 @@ final class CreateOrder
         $result->shippingAddress = Address::fromJson($json['shipping_address'] ?? []);
         $result->billingAddress = Address::fromJson($json['billing_address'] ?? []);
         $result->orderItems = ItemSet::fromJson($json['order_items'] ?? []);
+        $result->orderExtraItems = ExtraItemSet::fromJson($json['extra_order_items'] ?? []);
         return $result;
     }
 
@@ -61,8 +65,9 @@ final class CreateOrder
             'store_id' => $this->storeId,
             'tax_type' => $this->taxType,
             'order_items' => $this->orderItems->toJson(),
+            'order_extra_items' => $this->orderExtraItems->toJson(),
             'shipping_address' => $this->shippingAddress->toJson(),
-            'billing_address' => $this->billingAddress->toJson(),
+            'billing_address' => $this->billingAddress->toJson()
         ];
     }
 
@@ -93,11 +98,13 @@ final class CreateOrder
         ($this->shippingService === $object->shippingService) &&
         ($this->shippingAddress->equals($object->shippingAddress)) &&
         ($this->billingAddress->equals($object->billingAddress)) &&
+        ($this->orderExtraItems->equals($object->orderExtraItems)) &&
         ($this->orderItems->equals($object->orderItems));
     }
 
     private $baseCurrency;
     private $baseCurrencyRate;
+    /** @var Address */
     private $billingAddress;
     private $channelOrderId;
     private $contactId;
@@ -109,12 +116,15 @@ final class CreateOrder
     private $channelOrderNumber;
     /** @var ItemSet */
     private $orderItems;
+    /** @var ExtraItemSet */
+    private $orderExtraItems;
     private $orderStatus;
     private $paymentMethod;
     private $paymentStatus;
     private $referenceNumber;
     private $remark;
     private $salesPersonId;
+    /** @var Address */
     private $shippingAddress;
     private $shippingCarrier;
     private $shippingService;
@@ -214,6 +224,18 @@ final class CreateOrder
     {
         $result = clone $this;
         $result->orderItems = $orderItems;
+        return $result;
+    }
+
+    public function getOrderExtraItems(): ?ExtraItemSet
+    {
+        return $this->orderExtraItems;
+    }
+
+    public function withOrderExtraItems(ExtraItemSet $orderExtraItems): self
+    {
+        $result = clone $this;
+        $result->orderExtraItems = $orderExtraItems;
         return $result;
     }
 
