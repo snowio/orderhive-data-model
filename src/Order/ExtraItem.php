@@ -21,7 +21,7 @@ final class ExtraItem
         $result->updateType = $json['update_type'] ?? null;
         $result->taxPercent = $json['tax_percent'] ?? null;
         $result->taxValue = $json['tax_value'] ?? null;
-        $result->taxInfo = $json['tax_info'] ?? null;
+        $result->taxInfo = TaxInfo::fromJson($json['tax_info'] ?? null);
 
         return $result;
     }
