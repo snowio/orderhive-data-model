@@ -1,35 +1,15 @@
 <?php
 declare(strict_types = 1);
-namespace SnowIO\OrderHiveDataModel\Order;
+namespace SnowIO\OrderHiveDataModel\Order\OrderDetails;
 
-final class OrderDetails
+use SnowIO\OrderHiveDataModel\Order\OrderTagsListingSet;
+
+final class Order
 {
-    private $exportType;
-    private $discountCode;
-    private $mcfStatus;
-    private $splitOrder;
-    private $shippingAddressType;
-    private $validShippingAddress;
-    private $taxCalculation;
-    private $warehouse;
-    private $prefix;
-    private $suffix;
-    private $unreadCommentCount;
-    private $customPricingTierId;
-    private $shipment;
-    private $salesPerson;
-    private $baseCurrencyRate;
-    private $taxType;
-    private $orderItems;
-    private $orderExtraItems;
-    private $shippingAddress;
-    private $billingAddress;
-    private $deliveryAddress;
-
     public static function of($id): self
     {
         $order = new self($id);
-        $order->orderItems = ListOrderItemSet::create();
+        $order->orderItems = ItemSet::create();
         $order->tags = OrderTagsListingSet::create();
         $order->warehouse = Warehouse::create();
         $order->orderExtraItems = ExtraItemSet::create();
@@ -42,7 +22,7 @@ final class OrderDetails
     {
         $result = self::of($json['id']);
         $result->warehouse = Warehouse::fromJson($json['warehouse'] ?? null);
-        $result->orderItems = OrderItemSet::fromJson($json['order_items'] ?? []);
+        $result->orderItems = ItemSet::fromJson($json['order_items'] ?? []);
         $result->contactId = $json['contact_id'] ?? null;
         $result->isBackOrder = $json['is_back_order'] ?? null;
         $result->shippingService = $json['shipping_service'] ?? null;
@@ -65,13 +45,14 @@ final class OrderDetails
         $result->channelIcon = $json['channel_icon'] ?? null;
         $result->channelName = $json['channel_name'] ?? null;
         $result->total = $json['total'] ?? 0;
-        $result->shippingAddress = Address::fromJson($json['shopping_address'] ?? []);
+        $result->shippingAddress = Address::fromJson($json['shipping_address'] ?? []);
         $result->billingAddress = Address::fromJson($json['billing_address'] ?? []);
         $result->unreadCommentCount = $json['unread_comment_count'] ?? 0;
         $result->commentCount = $json['comment_count'] ?? 0;
         $result->syncCreated = $json['sync_created'] ?? null;
         $result->isAnyUnread = $json['is_any_unread'] ?? null;
         $result->partiallyCancel = $json['partially_cancel'] ?? null;
+        $result->actionRequired = $json['action_required'] ?? null;
         $result->orderItemsSize = $json['order_items_size'] ?? 0;
         $result->baseCurrencyRate = $json['base_currency_rate'] ?? 0;
         $result->prefix = $json['prefix'] ?? null;
@@ -138,6 +119,7 @@ final class OrderDetails
             'sync_created' => $this->syncCreated,
             'is_any_unread' => $this->isAnyUnread,
             'partially_cancel' => $this->partiallyCancel,
+            'action_required' => $this->actionRequired,
             'order_items' => $this->orderItems->toJson(),
             'warehouse_id' => $this->warehouseId,
             'remark' => $this->remark,
@@ -174,7 +156,7 @@ final class OrderDetails
         ];
     }
 
-    public function equals(ListOrder $object): bool
+    public function equals(Order $object): bool
     {
         return ($object instanceof Order) &&
         ($this->warehouseId === $object->warehouseId) &&
@@ -204,6 +186,7 @@ final class OrderDetails
         ($this->syncCreated === $object->syncCreated) &&
         ($this->isAnyUnread === $object->isAnyUnread) &&
         ($this->partiallyCancel === $object->partiallyCancel) &&
+        ($this->actionRequired === $object->actionRequired) &&
         ($this->orderItemsSize === $object->orderItemsSize) &&
         ($this->warehouseId === $object->warehouseId) &&
         ($this->remark === $object->remark) &&
@@ -222,8 +205,6 @@ final class OrderDetails
     }
 
     private $id;
-    /** @var ListOrderItemSet */
-    private $listOrderItems;
     private $contactId;
     private $isBackOrder;
     private $shippingService;
@@ -251,7 +232,6 @@ final class OrderDetails
     private $isAnyUnread;
     private $partiallyCancel;
     private $orderItemsSize;
-    private $actionRequired;
     private $warehouseId;
     private $remark;
     private $fulfillmentStatus;
@@ -268,11 +248,33 @@ final class OrderDetails
     private $modifiedDate;
     private $syncModified;
     private $holdDate;
+    protected $exportType;
+    protected $discountCode;
+    protected $mcfStatus;
+    protected $splitOrder;
+    protected $shippingAddressType;
+    protected $validShippingAddress;
+    protected $taxCalculation;
+    protected $warehouse;
+    protected $prefix;
+    protected $suffix;
+    protected $unreadCommentCount;
+    protected $customPricingTierId;
+    protected $shipment;
+    protected $salesPerson;
+    protected $baseCurrencyRate;
+    protected $taxType;
+    protected $orderItems;
+    protected $orderExtraItems;
+    protected $shippingAddress;
+    protected $billingAddress;
+    protected $deliveryAddress;
+    protected $actionRequired;
 
     private function __construct($id)
     {
         $this->id = $id;
-        $this->listOrderItems = ListOrderItemSet::create();
+        $this->listOrderItems = ItemSet::create();
     }
 
     public function getOrderStatus(): ?string
@@ -395,16 +397,16 @@ final class OrderDetails
         return $this->remark;
     }
 
-    public function withId(?int $id): self
+    public function withId($id): self
     {
         $result = clone $this;
         $result->id = $id;
         return $result;
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
-        return $this->id;
+        return (string) $this->id;
     }
 
     public function withWarehouseId(int $warehouseId): self
@@ -611,14 +613,14 @@ final class OrderDetails
         return $this->partiallyCancel;
     }
 
-    public function withListOrderItems(ListOrderItemSet $listOrderItems): self
+    public function withListOrderItems(ItemSet $listOrderItems): self
     {
         $result = clone $this;
         $result->listOrderItems = $listOrderItems;
         return $result;
     }
 
-    public function getListOrderItems(): ListOrderItemSet
+    public function getListOrderItems(): ItemSet
     {
         return $this->listOrderItems;
     }
@@ -683,18 +685,6 @@ final class OrderDetails
         return $this->orderItemsSize;
     }
 
-    public function withActionRequired(?bool $actionRequired): self
-    {
-        $result = clone $this;
-        $result->actionRequired = $actionRequired;
-        return $result;
-    }
-
-    public function getActionRequired(): ?bool
-    {
-        return $this->actionRequired;
-    }
-
     public function withFulfillmentStatus(?string $fulfillmentStatus): self
     {
         $result = clone $this;
@@ -707,16 +697,16 @@ final class OrderDetails
         return $this->fulfillmentStatus;
     }
 
-    public function withCustomFieldsListing(?array $customFieldsListing): self
+    public function withCustomFields(?array $customFields): self
     {
         $result = clone $this;
-        $result->customFieldsListing = $customFieldsListing;
+        $result->customFields = $customFields;
         return $result;
     }
 
-    public function getCustomFieldsListing(): ?array
+    public function getCustomFields(): ?array
     {
-        return $this->customFieldsListing;
+        return $this->customFields;
     }
 
     public function withPresetId(int $presetId): self
