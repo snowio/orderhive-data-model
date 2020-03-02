@@ -6,18 +6,13 @@ use SnowIO\OrderHiveDataModel\Order\Warehouse as BaseWarehouse;
 
 class Warehouse extends BaseWarehouse
 {
-    private function __construct($id)
-    {
-        $this->id = $id;
-    }
-
-    public static function of($id)
+    public static function of(?int $id)
     {
         $item = new self($id);
         return $item;
     }
 
-    public static function fromJson($json): self
+    public static function fromJson($json)
     {
         return self::of($json['id'] ?? null)
             ->withIsDefault($json['is_default'] ?? null)

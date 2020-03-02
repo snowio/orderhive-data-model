@@ -421,6 +421,18 @@ final class Order
         return $this->warehouseId;
     }
 
+    public function withWarehouse(Warehouse $warehouse): self
+    {
+        $result = clone $this;
+        $result->warehouse = $warehouse;
+        return $result;
+    }
+
+    public function getWarehouse(): Warehouse
+    {
+        return $this->warehouse;
+    }
+
     public function withIsBackOrder(?bool $isBackOrder): self
     {
         $result = clone $this;
@@ -498,6 +510,44 @@ final class Order
         $result = clone $this;
         $result->billingName = $billingName;
         return $result;
+    }
+
+    /**
+     * @param Address $shippingAddress
+     * @return Order
+     */
+    public function withShippingAddress(Address $shippingAddress): self
+    {
+        $result = clone $this;
+        $result->shippingAddress = $shippingAddress;
+        return $result;
+    }
+
+    /**
+     * @param Address $billingAddress
+     * @return Order
+     */
+    public function withBillingAddress(Address $billingAddress): self
+    {
+        $result = clone $this;
+        $result->billingAddress = $billingAddress;
+        return $result;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getBillingAddress(): Address
+    {
+        return $this->billingAddress;
+    }
+
+    /**
+     * @return Address
+     */
+    public function getShippingAddress(): Address
+    {
+        return $this->shippingAddress;
     }
 
     public function getBillingName(): ?string
@@ -613,16 +663,16 @@ final class Order
         return $this->partiallyCancel;
     }
 
-    public function withListOrderItems(ItemSet $listOrderItems): self
+    public function withOrderItems(ItemSet $orderItems): self
     {
         $result = clone $this;
-        $result->listOrderItems = $listOrderItems;
+        $result->orderItems = $orderItems;
         return $result;
     }
 
-    public function getListOrderItems(): ItemSet
+    public function getOrderItems(): ItemSet
     {
-        return $this->listOrderItems;
+        return $this->orderItems;
     }
 
     public function withModifiedDate($modifiedDate): self
@@ -779,5 +829,41 @@ final class Order
     public function getChannelOrderId(): ?string
     {
         return $this->channelOrderId;
+    }
+
+    public function withTaxType(?string $taxType): self
+    {
+        $result = clone $this;
+        $result->taxType = $taxType;
+        return $result;
+    }
+
+    public function getTaxType(): ?string
+    {
+        return $this->taxType;
+    }
+
+    public function withBaseCurrencyRate(?float $baseCurrencyRate): self
+    {
+        $result = clone $this;
+        $result->baseCurrencyRate = $baseCurrencyRate;
+        return $result;
+    }
+
+    public function getBaseCurrencyRate(): ?float
+    {
+        return $this->baseCurrencyRate;
+    }
+
+    public function withUnreadCommentCount(int $unreadCommentCount): self
+    {
+        $result = clone $this;
+        $result->unreadCommentCount = $unreadCommentCount;
+        return $result;
+    }
+
+    public function getUnreadCommentCount(): int
+    {
+        return $this->unreadCommentCount;
     }
 }

@@ -165,16 +165,16 @@ final class Item
     private $note;
     private $price;
     private $productImage;
-    private $quantityOrdered;
-    private $quantityInvoiced;
-    private $quantityCancelled;
-    private $quantityShipped;
-    private $quantityAvailable;
-    private $quantityOnHand;
-    private $quantityReturned;
-    private $quantityDelivered;
-    private $quantityPacked;
-    private $quantityDropShipped;
+    private $quantityOrdered = 0;
+    private $quantityInvoiced = 0;
+    private $quantityCancelled = 0;
+    private $quantityShipped = 0;
+    private $quantityAvailable = 0;
+    private $quantityOnHand = 0;
+    private $quantityReturned = 0;
+    private $quantityDelivered = 0;
+    private $quantityPacked = 0;
+    private $quantityDropShipped = 0;
     private $rowTotal;
     private $sku;
     private $taxInfo;
@@ -187,7 +187,7 @@ final class Item
     private $category;
     private $defaultSupplierId;
     private $type;
-    private $suppliers;
+    private $suppliers = [];
     private $serialNumbers;
 
     public function getItemId()
@@ -397,6 +397,18 @@ final class Item
     {
         $result = clone $this;
         $result->weightUnit = $weightUnit;
+        return $result;
+    }
+
+    public function getQuantityCancelled(): int
+    {
+        return $this->quantityCancelled;
+    }
+
+    public function withQuantityCancelled(int $quantityCancelled): self
+    {
+        $result = clone $this;
+        $result->quantityCancelled = $quantityCancelled;
         return $result;
     }
 
@@ -631,5 +643,17 @@ final class Item
     public function getType(): ?string
     {
         return $this->type;
+    }
+
+    public function withSuppliers(array $suppliers): self
+    {
+        $result = clone $this;
+        $result->suppliers = $suppliers;
+        return $result;
+    }
+
+    public function getSuppliers(): array
+    {
+        return $this->suppliers;
     }
 }

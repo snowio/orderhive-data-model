@@ -4,7 +4,10 @@ namespace SnowIO\OrderHiveDataModel\Order;
 
 class Warehouse
 {
-    public static function of(?int $id): self
+    /**
+     * @return static
+     */
+    public static function of(?int $id)
     {
         $item = new self($id);
         return $item;
@@ -15,7 +18,7 @@ class Warehouse
         return new self(null);
     }
 
-    public static function fromJson($json): self
+    public static function fromJson($json)
     {
         return self::of($json['id'] ?? null)
             ->withIsDefault($json['is_default'] ?? null);
@@ -36,10 +39,10 @@ class Warehouse
         ($this->id === $object->id);
     }
 
-    private $id;
-    private $isDefault;
+    protected $id;
+    protected $isDefault;
 
-    private function __construct(?int $id)
+    protected function __construct(?int $id)
     {
         $this->id = $id;
     }
