@@ -33,7 +33,7 @@ final class ExtraItem
             'price' => $this->price,
             'quantity_ordered' => $this->quantityOrdered,
             'row_total' => $this->rowTotal,
-            'tax_info' => $this->taxInfo->toJson(),
+            'tax_info' => ($this->taxInfo->getId()) ? $this->taxInfo->toJson() : null,
             'tax_percent' => $this->taxPercent,
             'tax_value' => $this->taxValue,
             'update_type' => $this->updateType,
