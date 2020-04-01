@@ -3,6 +3,8 @@ declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Test\Unit\Order;
 
 use PHPUnit\Framework\TestCase;
+use SnowIO\OrderHiveDataModel\Order\CustomFields;
+use SnowIO\OrderHiveDataModel\Order\CustomFieldsSet;
 use SnowIO\OrderHiveDataModel\Order\OrderDetails\Address;
 use SnowIO\OrderHiveDataModel\Order\OrderDetails\Item;
 use SnowIO\OrderHiveDataModel\Order\OrderDetails\ItemSet;
@@ -155,7 +157,9 @@ class OrderDetailsTest extends TestCase
             "sales_person" => null,
             "preset_id" => null,
             "fulfillment_status" => null,
-            "custom_fields" => null,
+            "custom_fields" => [
+                ["name" => "PO", "type" => "STRING", "value" => "123"]
+            ],
             "unread_comment_count" => 0,
             "custom_pricing_tier_id" => null,
             "templates" => null,
@@ -204,6 +208,9 @@ class OrderDetailsTest extends TestCase
             ->withBaseCurrencyRate(1)
             ->withContactId(52308715)
             ->withCurrency('USD')
+            ->withCustomFields(CustomFieldsSet::of([
+                CustomFields::of('PO', 'STRING', '123')
+            ]))
             ->withOrderItems(ItemSet::of([
                 Item::of(123, 1)
                     ->withName('Apple iPhone 5c 32GB Cell Phone Green')
