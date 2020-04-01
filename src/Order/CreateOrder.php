@@ -2,8 +2,6 @@
 declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Order;
 
-use SwoonTest\Magento\Model\ShippingAddress;
-
 final class CreateOrder
 {
     public static function of($referenceNumber): self

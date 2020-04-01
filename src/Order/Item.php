@@ -67,7 +67,7 @@ final class Item
             'quantity_invoiced' => $this->quantityInvoiced,
             'row_total' => $this->rowTotal,
             'sku' => $this->sku,
-            'tax_info' => $this->taxInfo->toJson(),
+            'tax_info' => ($this->taxInfo->getId()) ? $this->taxInfo->toJson() : null,
             'tax_percent' => $this->taxPercent,
             'tax_value' => $this->taxValue,
             'update_type' => $this->updateType,
