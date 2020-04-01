@@ -11,6 +11,7 @@ final class CreateOrder
         $order->orderExtraItems = ExtraItemSet::create();
         $order->shippingAddress = Address::create();
         $order->billingAddress = Address::create();
+        $order->customFields = CustomFieldsSet::create();
         return $order;
     }
 
@@ -36,6 +37,7 @@ final class CreateOrder
         $result->contactId = $json['contact_id'] ?? null;
         $result->baseCurrencyRate = $json['base_currency_rate'] ?? null;
         $result->baseCurrency = $json['base_currency'] ?? null;
+        $result->customFields = CustomFieldsSet::fromJson($json['custom_fields'] ?? []);
         $result->shippingAddress = Address::fromJson($json['shipping_address'] ?? []);
         $result->billingAddress = Address::fromJson($json['billing_address'] ?? []);
         $result->orderItems = ItemSet::fromJson($json['order_items'] ?? []);
@@ -62,6 +64,7 @@ final class CreateOrder
             'order_status' => $this->orderStatus,
             'store_id' => $this->storeId,
             'tax_type' => $this->taxType,
+            'custom_fields' => $this->customFields->toJson(),
             'order_items' => $this->orderItems->toJson(),
             'order_extra_items' => $this->orderExtraItems->toJson(),
             'shipping_address' => $this->shippingAddress->toJson(),

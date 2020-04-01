@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Order\OrderDetails;
 
+use SnowIO\OrderHiveDataModel\Order\CustomFieldsSet;
 use SnowIO\OrderHiveDataModel\Order\OrderTagsListingSet;
 
 final class Order
@@ -13,6 +14,7 @@ final class Order
         $order->tags = OrderTagsListingSet::create();
         $order->warehouse = Warehouse::create();
         $order->orderExtraItems = ExtraItemSet::create();
+        $order->customFields = CustomFieldsSet::create();
         $order->billingAddress = Address::create();
         $order->shippingAddress = Address::create();
         return $order;
@@ -62,7 +64,7 @@ final class Order
         $result->remark = $json['remark'] ?? null;
         $result->salesPerson = $json['sales_person'] ?? null;
         $result->fulfillmentStatus = $json['fulfillment_status'] ?? null;
-        $result->customFields = $json['custom_fields'] ?? null;
+        $result->customFields = CustomFieldsSet::fromJson($json['custom_fields'] ?? []);
         $result->presetId = $json['preset_id'] ?? null;
         $result->customPricingTierId = $json['custom_pricing_tier_id'] ?? null;
         $result->templates = $json['templates'] ?? null;
@@ -131,7 +133,7 @@ final class Order
             'preset_id' => $this->presetId,
             'tax_type' => $this->taxType,
             'fulfillment_status' => $this->fulfillmentStatus,
-            'custom_fields' => $this->customFields,
+            'custom_fields' => $this->customFields->toJson(),
             'unread_comment_count' => $this->unreadCommentCount,
             'custom_pricing_tier_id' => $this->customPricingTierId,
             'templates' => $this->templates,
@@ -201,6 +203,7 @@ final class Order
         ($this->deliveryDate === $object->deliveryDate) &&
         ($this->shippingDueDate === $object->shippingDueDate) &&
         ($this->modifiedDate === $object->modifiedDate) &&
+        ($this->customFields->equals($object->customFields)) &&
         ($this->listOrderItems->equals($object->listOrderItems));
     }
 
@@ -747,14 +750,14 @@ final class Order
         return $this->fulfillmentStatus;
     }
 
-    public function withCustomFields(?array $customFields): self
+    public function withCustomFields(CustomFieldsSet $customFields): self
     {
         $result = clone $this;
         $result->customFields = $customFields;
         return $result;
     }
 
-    public function getCustomFields(): ?array
+    public function getCustomFields(): CustomFieldsSet
     {
         return $this->customFields;
     }

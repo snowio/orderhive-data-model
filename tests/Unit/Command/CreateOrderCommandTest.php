@@ -5,6 +5,8 @@ namespace SnowIO\OrderHiveDataModel\Test\Unit\Command;
 use PHPUnit\Framework\TestCase;
 use SnowIO\OrderHiveDataModel\Command\CreateOrderCommand;
 use SnowIO\OrderHiveDataModel\Order\CreateOrder;
+use SnowIO\OrderHiveDataModel\Order\CustomFields;
+use SnowIO\OrderHiveDataModel\Order\CustomFieldsSet;
 use SnowIO\OrderHiveDataModel\Order\Order;
 use SnowIO\OrderHiveDataModel\Order\OrderStatus;
 use SnowIO\OrderHiveDataModel\Order\TaxInfo;
@@ -22,6 +24,9 @@ class CreateOrderCommandTest extends TestCase
             'order_status' => OrderStatus::CONFIRM,
             'channel_order_number' => 'test',
             'tax_type' => "EXCLUSIVE",
+            'custom_fields' => [
+                ["name" => "PO Reference", "type" => "STRING", "value" => "123"]
+            ],
             'currency' => "USD",
         ]);
 
@@ -30,7 +35,8 @@ class CreateOrderCommandTest extends TestCase
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withStoreId(46670)
             ->withCurrency("USD")
-            ->withTaxType("EXCLUSIVE");
+            ->withTaxType("EXCLUSIVE")
+            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', 'STRING', '123')]));
 
         self::assertEquals($expected, $createOrderCommand->getCreateOrder());
     }
@@ -40,7 +46,8 @@ class CreateOrderCommandTest extends TestCase
         $order = CreateOrder::of('28393283')
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withCurrency('USD')
-            ->withStoreId(13);
+            ->withStoreId(13)
+            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', 'STRING', '123')]));
 
         $createOrderCommand = CreateOrderCommand::of($order);
 
@@ -62,6 +69,13 @@ class CreateOrderCommandTest extends TestCase
             'base_currency' => null,
             'remark' => null,
             'order_items' => [],
+            'custom_fields' => [
+                [
+                    "name" => "PO Reference",
+                    "type" => "STRING",
+                    "value" => "123",
+                ]
+            ],
             'order_extra_items' => [],
             'shipping_address' => [
                 'address1' => null,
