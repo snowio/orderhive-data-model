@@ -1,12 +1,12 @@
 <?php
 declare(strict_types = 1);
-namespace SnowIO\OrderHiveDataModel\Test\Unit\Product;
+namespace SnowIO\OrderHiveDataModel\Test\Unit\Product\Simple;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\OrderHiveDataModel\Product\Category;
 use SnowIO\OrderHiveDataModel\Product\ProductStore;
 use SnowIO\OrderHiveDataModel\Product\ProductStoresSet;
-use SnowIO\OrderHiveDataModel\Product\SimpleProduct;
+use SnowIO\OrderHiveDataModel\Product\Simple\SimpleProduct;
 
 class SimpleProductTest extends TestCase
 {

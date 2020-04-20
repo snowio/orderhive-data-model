@@ -1,16 +1,16 @@
 <?php
 declare(strict_types = 1);
-namespace SnowIO\OrderHiveDataModel\Test\Unit\Product;
+namespace SnowIO\OrderHiveDataModel\Test\Unit\Product\Configurable;
 
 use PHPUnit\Framework\TestCase;
 use SnowIO\OrderHiveDataModel\Product\Category;
-use SnowIO\OrderHiveDataModel\Product\ConfigurableProduct;
-use SnowIO\OrderHiveDataModel\Product\MemberProduct;
-use SnowIO\OrderHiveDataModel\Product\MembersSet;
-use SnowIO\OrderHiveDataModel\Product\ProductOption;
-use SnowIO\OrderHiveDataModel\Product\ProductOptionsSet;
-use SnowIO\OrderHiveDataModel\Product\ProductPrice;
-use SnowIO\OrderHiveDataModel\Product\ProductPricesSet;
+use SnowIO\OrderHiveDataModel\Product\Configurable\ConfigurableProduct;
+use SnowIO\OrderHiveDataModel\Product\Configurable\MemberProduct;
+use SnowIO\OrderHiveDataModel\Product\Configurable\MembersSet;
+use SnowIO\OrderHiveDataModel\Product\Configurable\ProductOption;
+use SnowIO\OrderHiveDataModel\Product\Configurable\ProductOptionsSet;
+use SnowIO\OrderHiveDataModel\Product\Configurable\ProductPrice;
+use SnowIO\OrderHiveDataModel\Product\Configurable\ProductPricesSet;
 use SnowIO\OrderHiveDataModel\Product\ProductStore;
 use SnowIO\OrderHiveDataModel\Product\ProductStoresSet;
 

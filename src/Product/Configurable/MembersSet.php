@@ -1,6 +1,6 @@
 <?php
 declare(strict_types = 1);
-namespace SnowIO\OrderHiveDataModel\Product;
+namespace SnowIO\OrderHiveDataModel\Product\Configurable;
 
 use SnowIO\OrderHiveDataModel\Internal\SetTrait;
 

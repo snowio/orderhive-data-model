@@ -1,6 +1,9 @@
 <?php
 
-namespace SnowIO\OrderHiveDataModel\Product;
+namespace SnowIO\OrderHiveDataModel\Product\Configurable;
+
+use SnowIO\OrderHiveDataModel\Product\Category;
+use SnowIO\OrderHiveDataModel\Product\ProductStoresSet;
 
 class ConfigurableProduct
 {

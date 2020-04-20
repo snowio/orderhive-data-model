@@ -1,6 +1,6 @@
 <?php
 
-namespace SnowIO\OrderHiveDataModel\Product;
+namespace SnowIO\OrderHiveDataModel\Product\Configurable;
 
 class ProductOption
 {
