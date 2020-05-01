@@ -8,6 +8,9 @@ final class UpdateSimpleProductCommand
 {
     public static function of(SimpleProduct $simpleProduct): self
     {
+        if (!$simpleProduct->getId()) {
+            throw new \DomainException('id must be present in order to update the product');
+        }
         $updateProduct = new self;
         $updateProduct->simpleProduct = $simpleProduct;
         return $updateProduct;

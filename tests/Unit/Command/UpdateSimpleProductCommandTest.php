@@ -52,4 +52,15 @@ class UpdateSimpleCommandTest extends TestCase
             ]
         ], $productCommand->toJson());
     }
+
+    public function testExceptionWhenIdNotSet()
+    {
+        self::expectExceptionMessage('id must be present in order to update the product');
+        self::expectException(\DomainException::class);
+
+        UpdateSimpleProductCommand::of(
+            SimpleProduct::of('sku')
+                ->withName('test')
+        );
+    }
 }
