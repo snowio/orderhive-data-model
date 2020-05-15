@@ -25,8 +25,17 @@ class CustomFieldsTest extends TestCase
         $this->expectException(OrderHiveDataException::class);
 
         CustomFieldsSet::of([
-            CustomFields::of('a', 'STRING', '123'),
-            CustomFields::of('a', 'STRING', '123')
+            CustomFields::of('a', 'TEXT', '123'),
+            CustomFields::of('a', 'TEXT', '123')
+        ]);
+    }
+
+    public function testInvalidCustomFieldType()
+    {
+        $this->expectException(OrderHiveDataException::class);
+
+        CustomFieldsSet::of([
+            CustomFields::of('a', 'INVALID', '123')
         ]);
     }
 
@@ -35,8 +44,8 @@ class CustomFieldsTest extends TestCase
         $this->expectException(OrderHiveDataException::class);
 
         CustomFieldsSet::fromJson([
-            CustomFields::of('a', 'STRING', '123')->toJson(),
-            CustomFields::of('a', 'STRING', '123')->toJson(),
+            CustomFields::of('a', 'TEXT', '123')->toJson(),
+            CustomFields::of('a', 'TEXT', '123')->toJson(),
         ]);
     }
 
@@ -55,13 +64,13 @@ class CustomFieldsTest extends TestCase
     public function testDefaultValues()
     {
         $customFieldSet = CustomFieldsSet::of([
-            CustomFields::of('a', 'STRING', '123')
+            CustomFields::of('a', 'TEXT', '123')
         ]);
 
         self::assertEquals([
             [
                 'name' => 'a',
-                'type' => 'STRING',
+                'type' => 'TEXT',
                 'value' => '123'
             ]
         ], $customFieldSet->toJson());
@@ -72,15 +81,15 @@ class CustomFieldsTest extends TestCase
         $this->expectException(OrderHiveDataException::class);
 
         CustomFieldsSet::of([
-            CustomFields::of('a', 'STRING', '123'),
-            CustomFields::of('a', 'STRING', '123')
+            CustomFields::of('a', 'TEXT', '123'),
+            CustomFields::of('a', 'TEXT', '123')
         ]);
     }
 
     public function testGetShouldUseOrderItemIdAsKey()
     {
         $customFieldSet = CustomFieldsSet::of([
-            CustomFields::of('a', 'STRING', '123')
+            CustomFields::of('a', 'TEXT', '123')
         ]);
         self::assertInstanceOf(CustomFields::class, $customFieldSet->get('a'));
         self::assertNull($customFieldSet->get('b'));
@@ -89,19 +98,19 @@ class CustomFieldsTest extends TestCase
     public function testEquality()
     {
         $customFieldSet = CustomFieldsSet::of([
-            CustomFields::of('a', 'STRING', '123'),
-            CustomFields::of('b', 'STRING', '123'),
-            CustomFields::of('c', 'STRING', '123'),
+            CustomFields::of('a', 'TEXT', '123'),
+            CustomFields::of('b', 'TEXT', '123'),
+            CustomFields::of('c', 'TEXT', '123'),
         ]);
         $sameSet = CustomFieldsSet::of([
-            CustomFields::of('a', 'STRING', '123'),
-            CustomFields::of('b', 'STRING', '123'),
-            CustomFields::of('c', 'STRING', '123'),
+            CustomFields::of('a', 'TEXT', '123'),
+            CustomFields::of('b', 'TEXT', '123'),
+            CustomFields::of('c', 'TEXT', '123'),
         ]);
         $notSameSet = CustomFieldsSet::of([
-            CustomFields::of('a', 'STRING', '111'),
-            CustomFields::of('b', 'STRING', '222'),
-            CustomFields::of('c', 'STRING', '333'),
+            CustomFields::of('a', 'TEXT', '111'),
+            CustomFields::of('b', 'TEXT', '222'),
+            CustomFields::of('c', 'TEXT', '333'),
         ]);
 
         self::assertTrue($customFieldSet->equals($sameSet));

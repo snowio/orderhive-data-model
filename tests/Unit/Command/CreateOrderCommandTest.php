@@ -25,7 +25,7 @@ class CreateOrderCommandTest extends TestCase
             'channel_order_number' => 'test',
             'tax_type' => "EXCLUSIVE",
             'custom_fields' => [
-                ["name" => "PO Reference", "type" => "STRING", "value" => "123"]
+                ["name" => "PO Reference", "type" => "TEXT", "value" => "123"]
             ],
             'currency' => "USD",
         ]);
@@ -36,7 +36,7 @@ class CreateOrderCommandTest extends TestCase
             ->withStoreId(46670)
             ->withCurrency("USD")
             ->withTaxType("EXCLUSIVE")
-            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', 'STRING', '123')]));
+            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', 'TEXT', '123')]));
 
         self::assertEquals($expected, $createOrderCommand->getCreateOrder());
     }
@@ -47,7 +47,7 @@ class CreateOrderCommandTest extends TestCase
             ->withOrderStatus(OrderStatus::CONFIRM)
             ->withCurrency('USD')
             ->withStoreId(13)
-            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', 'STRING', '123')]));
+            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', 'TEXT', '123')]));
 
         $createOrderCommand = CreateOrderCommand::of($order);
 
@@ -72,7 +72,7 @@ class CreateOrderCommandTest extends TestCase
             'custom_fields' => [
                 [
                     "name" => "PO Reference",
-                    "type" => "STRING",
+                    "type" => "TEXT",
                     "value" => "123",
                 ]
             ],
