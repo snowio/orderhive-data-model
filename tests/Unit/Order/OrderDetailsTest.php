@@ -158,7 +158,7 @@ class OrderDetailsTest extends TestCase
             "preset_id" => null,
             "fulfillment_status" => null,
             "custom_fields" => [
-                ["name" => "PO", "type" => "STRING", "value" => "123"]
+                ["name" => "PO", "type" => "TEXT", "value" => "123"]
             ],
             "unread_comment_count" => 0,
             "custom_pricing_tier_id" => null,
@@ -209,7 +209,7 @@ class OrderDetailsTest extends TestCase
             ->withContactId(52308715)
             ->withCurrency('USD')
             ->withCustomFields(CustomFieldsSet::of([
-                CustomFields::of('PO', 'STRING', '123')
+                CustomFields::of('PO', CustomFields::TYPE_TEXT, '123')
             ]))
             ->withOrderItems(ItemSet::of([
                 Item::of(123, 1)
