@@ -209,7 +209,7 @@ class OrderDetailsTest extends TestCase
             ->withContactId(52308715)
             ->withCurrency('USD')
             ->withCustomFields(CustomFieldsSet::of([
-                CustomFields::of('PO', 'TEXT', '123')
+                CustomFields::of('PO', CustomFields::TYPE_TEXT, '123')
             ]))
             ->withOrderItems(ItemSet::of([
                 Item::of(123, 1)
