@@ -7,6 +7,8 @@ use SnowIO\OrderHiveDataModel\Command\CreateOrderCommand;
 use SnowIO\OrderHiveDataModel\Order\CreateOrder;
 use SnowIO\OrderHiveDataModel\Order\CustomFields;
 use SnowIO\OrderHiveDataModel\Order\CustomFieldsSet;
+use SnowIO\OrderHiveDataModel\Order\ExtraItem;
+use SnowIO\OrderHiveDataModel\Order\ExtraItemSet;
 use SnowIO\OrderHiveDataModel\Order\OrderStatus;
 
 class CreateOrderCommandTest extends TestCase
@@ -23,6 +25,15 @@ class CreateOrderCommandTest extends TestCase
             'custom_fields' => [
                 ["name" => "PO Reference", "type" => "TEXT", "value" => "123"]
             ],
+            "order_extra_items" => [[
+                "name" => "Shipping & Handling",
+                "price" => 50,
+                "quantity_ordered" => 1,
+                "row_total" => 50,
+                "tax_percent" => 0,
+                "update_type" => "ADD",
+                "type" => "SHIPPING_COST",
+            ]],
             'currency' => "USD",
         ]);
 
@@ -32,7 +43,16 @@ class CreateOrderCommandTest extends TestCase
             ->withStoreId(46670)
             ->withCurrency("USD")
             ->withTaxType("EXCLUSIVE")
-            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', CustomFields::TYPE_TEXT, '123')]));
+            ->withCustomFields(CustomFieldsSet::of([CustomFields::of('PO Reference', CustomFields::TYPE_TEXT, '123')]))
+            ->withOrderExtraItems(ExtraItemSet::of([
+                ExtraItem::of('Shipping & Handling')
+                    ->withPrice(50)
+                    ->withQuantityOrdered(1)
+                    ->withRowTotal(50)
+                    ->withTaxPercent(0)
+                    ->withUpdateType('ADD')
+                    ->withType('SHIPPING_COST')
+            ]));
 
         self::assertEquals($expected, $createOrderCommand->getCreateOrder());
     }

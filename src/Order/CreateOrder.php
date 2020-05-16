@@ -41,7 +41,7 @@ final class CreateOrder
         $result->shippingAddress = Address::fromJson($json['shipping_address'] ?? []);
         $result->billingAddress = Address::fromJson($json['billing_address'] ?? []);
         $result->orderItems = ItemSet::fromJson($json['order_items'] ?? []);
-        $result->orderExtraItems = ExtraItemSet::fromJson($json['extra_order_items'] ?? []);
+        $result->orderExtraItems = ExtraItemSet::fromJson($json['order_extra_items'] ?? []);
         return $result;
     }
 
