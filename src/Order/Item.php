@@ -466,6 +466,17 @@ final class Item
     }
 
     /**
+     * @param mixed $quantityOrdered
+     * @return Item
+     */
+    public function withQuantityOrdered($quantityOrdered): self
+    {
+        $result = clone $this;
+        $result->quantityOrdered = $quantityOrdered;
+        return $result;
+    }
+
+    /**
      * @param string $weightUnit
      * @return Item
      */
