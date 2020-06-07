@@ -89,12 +89,19 @@ class SimpleProductTest extends TestCase
         self::assertEquals($order->getThreshold(), 0);
         self::assertEquals($order->getWeight(), 1.20);
         self::assertEquals($order->getWeightUnit(), 'kg');
-
         self::assertEquals($order->getCategory(), Category::of('Category Test'));
-
+        self::assertEquals($order->getCustomFields(), CustomFieldsSet::of([
+            CustomField::of('name')->withValue('value')
+        ]));
         self::assertEquals($order->getProductStores(), ProductStoresSet::of([
             ProductStore::of(46670)->withPrice('90')
         ]));
+    }
 
+    public function testEquals()
+    {
+        $product1 = SimpleProduct::fromJson($this->getJsonData('name', 'sku'));
+        $product2 = SimpleProduct::fromJson($this->getJsonData('name', 'sku'));
+        self::assertTrue($product1->equals($product2));
     }
 }
