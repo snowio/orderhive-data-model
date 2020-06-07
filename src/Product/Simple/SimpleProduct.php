@@ -3,6 +3,7 @@
 namespace SnowIO\OrderHiveDataModel\Product\Simple;
 
 use SnowIO\OrderHiveDataModel\Product\Category;
+use SnowIO\OrderHiveDataModel\Product\CustomFieldsSet;
 use SnowIO\OrderHiveDataModel\Product\ProductStoresSet;
 
 class SimpleProduct
@@ -30,6 +31,7 @@ class SimpleProduct
             ->withHsnCode($json['hsn_code'] ?? null)
             ->withBarcode($json['barcode'] ?? null)
             ->withThreshold($json['threshold'] ?? null)
+            ->withCustomFields(CustomFieldsSet::fromJson($json['custom_fields'] ?? []))
             ->withCategory(Category::of($json['category']['name'] ?? null))
             ->withProductStores(ProductStoresSet::fromJson($json['product_stores'] ?? []));
     }
@@ -48,6 +50,7 @@ class SimpleProduct
             'weight_unit' => $this->weightUnit,
             'hsn_code' => $this->hsnCode,
             'category' => $this->category->toJson(),
+            'custom_fields' => $this->customFields->toJson(),
             'product_stores' => $this->productStores->toJson()
         ];
     }
@@ -65,6 +68,7 @@ class SimpleProduct
         ($this->weight === $object->weight) &&
         ($this->weightUnit === $object->weightUnit) &&
         ($this->hsnCode === $object->hsnCode) &&
+        ($this->customFields->equals($object->customFields)) &&
         ($this->category->equals($object->category)) &&
         ($this->productStores->equals($object->productStores));
     }
@@ -80,6 +84,9 @@ class SimpleProduct
     private $weightUnit;
     private $hsnCode;
 
+    /** @var CustomFieldsSet */
+    private $customFields;
+
     /** @var ProductStoresSet */
     private $productStores;
 
@@ -91,6 +98,7 @@ class SimpleProduct
         $this->sku = $sku;
         $this->productStores = ProductStoresSet::create();
         $this->category = Category::create();
+        $this->customFields = CustomFieldsSet::create();
     }
 
     public function withId(?int $id): self
@@ -223,5 +231,17 @@ class SimpleProduct
     public function getProductStores(): ProductStoresSet
     {
         return $this->productStores;
+    }
+
+    public function withCustomFields(CustomFieldsSet $customFields): self
+    {
+        $result = clone $this;
+        $result->customFields = $customFields;
+        return $result;
+    }
+
+    public function getCustomFields(): CustomFieldsSet
+    {
+        return $this->customFields;
     }
 }

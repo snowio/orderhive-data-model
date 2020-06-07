@@ -3,7 +3,10 @@ declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Test\Unit\Product\Simple;
 
 use PHPUnit\Framework\TestCase;
+use SnowIO\OrderHiveDataModel\Order\CustomFields;
 use SnowIO\OrderHiveDataModel\Product\Category;
+use SnowIO\OrderHiveDataModel\Product\CustomField;
+use SnowIO\OrderHiveDataModel\Product\CustomFieldsSet;
 use SnowIO\OrderHiveDataModel\Product\ProductStore;
 use SnowIO\OrderHiveDataModel\Product\ProductStoresSet;
 use SnowIO\OrderHiveDataModel\Product\Simple\SimpleProduct;
@@ -26,6 +29,12 @@ class SimpleProductTest extends TestCase
             'weight' => 1.20,
             'weight_unit' => 'kg',
             'hsn_code' => 'hsn',
+            'custom_fields' => [
+                [
+                    'id' => 'name',
+                    'value' => 'value',
+                ]
+            ],
             'product_stores' => [
                 [
                     'store_id' => 46670,
@@ -56,6 +65,9 @@ class SimpleProductTest extends TestCase
             ->withWeight(1.20)
             ->withWeightUnit('kg')
             ->withCategory(Category::of('Category Test'))
+            ->withCustomFields(CustomFieldsSet::of([
+                CustomField::of('name')->withValue('value')
+            ]))
             ->withProductStores(ProductStoresSet::of([
                 ProductStore::of(46670)->withPrice('90')
             ]));
@@ -77,12 +89,19 @@ class SimpleProductTest extends TestCase
         self::assertEquals($order->getThreshold(), 0);
         self::assertEquals($order->getWeight(), 1.20);
         self::assertEquals($order->getWeightUnit(), 'kg');
-
         self::assertEquals($order->getCategory(), Category::of('Category Test'));
-
+        self::assertEquals($order->getCustomFields(), CustomFieldsSet::of([
+            CustomField::of('name')->withValue('value')
+        ]));
         self::assertEquals($order->getProductStores(), ProductStoresSet::of([
             ProductStore::of(46670)->withPrice('90')
         ]));
+    }
 
+    public function testEquals()
+    {
+        $product1 = SimpleProduct::fromJson($this->getJsonData('name', 'sku'));
+        $product2 = SimpleProduct::fromJson($this->getJsonData('name', 'sku'));
+        self::assertTrue($product1->equals($product2));
     }
 }
