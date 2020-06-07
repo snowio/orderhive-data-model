@@ -47,9 +47,8 @@ class UpdateSimpleCommandTest extends TestCase
             'category' => [
                 'name' => null
             ],
-            'product_stores' => [
-
-            ]
+            'custom_fields' => [],
+            'product_stores' => []
         ], $productCommand->toJson());
     }
 

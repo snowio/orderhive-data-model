@@ -52,6 +52,7 @@ class CreateSimpleCommandTest extends TestCase
             'weight' => 1.0,
             'weight_unit' => 'kg',
             'hsn_code' => null,
+            'custom_fields' => [],
             'category' => [
                 'name' => null
             ],
