@@ -25,6 +25,13 @@ final class CustomFieldsSet implements \IteratorAggregate
         return (string) $customField->getName();
     }
 
+    public function add(CustomFields $customField): self
+    {
+        $result = clone $this;
+        $result->items[self::getKey($customField)] = $customField;
+        return $result;
+    }
+
     public function toJson(): array
     {
         return
