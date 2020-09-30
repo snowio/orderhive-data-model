@@ -20,6 +20,18 @@ class CustomFieldsTest extends TestCase
         ], $customFieldSet->toJson());
     }
 
+    public function testAdditionToSet()
+    {
+        $customFieldSet = CustomFieldsSet::of([
+            CustomFields::of('field name', CustomFields::TYPE_NUMBER, '123')
+        ]);
+
+        $customFieldSet = $customFieldSet->add(CustomFields::of('another field ', CustomFields::TYPE_NUMBER, '123'));
+        $customFieldSet = $customFieldSet->add(CustomFields::of('field name', CustomFields::TYPE_NUMBER, '123'));
+
+        self::assertCount(2, $customFieldSet->toJson());
+    }
+
     public function testInvalidSetItemSetTwiceInOf()
     {
         $this->expectException(OrderHiveDataException::class);
