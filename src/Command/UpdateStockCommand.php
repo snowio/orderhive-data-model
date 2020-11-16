@@ -35,6 +35,5 @@ final class UpdateStockCommand
 
     private function __construct()
     {
-
     }
 }

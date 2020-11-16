@@ -20,7 +20,6 @@ use SnowIO\OrderHiveDataModel\Order\TaxInfoGroupSet;
 
 class OrderTest extends TestCase
 {
-
     private function getJsonData($referenceNumber)
     {
         return [
@@ -265,22 +264,24 @@ class OrderTest extends TestCase
         self::assertEquals($order->getId(), 1);
         self::assertEquals($order->getMetaData(), 'test');
         self::assertEquals($order->getQuantityInvoiced(), null);
-        self::assertEquals($order->getTaxInfo(),
-                    TaxInfo::of(1)
+        self::assertEquals(
+            $order->getTaxInfo(),
+            TaxInfo::of(1)
                         ->withTaxRate(1)
                         ->withGroups(TaxInfoGroupSet::of([
                             TaxInfoGroup::of(1)
                                 ->withName('name')
                                 ->withTaxRate(0)
                                 ->withTotalTaxValue(0)
-                        ])));
+                        ]))
+        );
 
         self::assertEquals($order->getTaxValue(), null);
         self::assertEquals($order->getUpdateType(), null);
         self::assertEquals($order->getWeight(), null);
         self::assertEquals($order->getWeightUnit(), null);
 
-        foreach($order->getOrderItems() as $item){
+        foreach ($order->getOrderItems() as $item) {
             self::assertSame($item->getQuantityOrdered(), 1);
             self::assertSame($item->getPrice(), 322.0);
             self::assertSame($item->getDiscountValue(), 72.128);

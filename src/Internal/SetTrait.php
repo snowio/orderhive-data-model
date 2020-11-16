@@ -158,7 +158,6 @@ trait SetTrait
 
     private function __construct()
     {
-
     }
 
     private static function itemsAreEqual($item1, $item2): bool

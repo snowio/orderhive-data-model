@@ -38,6 +38,5 @@ final class UpdateSimpleProductCommand
 
     private function __construct()
     {
-
     }
 }

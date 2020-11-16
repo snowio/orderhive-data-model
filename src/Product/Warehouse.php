@@ -91,5 +91,4 @@ class Warehouse
     {
         return $this->inventoryLevels;
     }
-
 }

@@ -14,7 +14,6 @@ use SnowIO\OrderHiveDataModel\Product\Configurable\ProductPricesSet;
 use SnowIO\OrderHiveDataModel\Product\ProductStore;
 use SnowIO\OrderHiveDataModel\Product\ProductStoresSet;
 
-
 class ConfigurableProductTest extends TestCase
 {
     private function getJsonData($modelName)
@@ -191,6 +190,5 @@ class ConfigurableProductTest extends TestCase
                     ProductPrice::of(2)->withPrice('100')
                 ]))
         ]));
-
     }
 }

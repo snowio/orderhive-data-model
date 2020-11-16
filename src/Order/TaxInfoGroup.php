@@ -99,5 +99,4 @@ class TaxInfoGroup
     {
         return $this->totalTaxValue;
     }
-
 }

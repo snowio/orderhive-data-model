@@ -35,6 +35,5 @@ final class UpdateOrderCommand
 
     private function __construct()
     {
-
     }
 }

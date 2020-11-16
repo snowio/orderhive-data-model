@@ -2,7 +2,6 @@
 
 namespace SnowIO\OrderHiveDataModel\Order\OrderDetails;
 
-
 class Address
 {
     public static function of(?int $id)

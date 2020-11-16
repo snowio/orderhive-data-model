@@ -268,5 +268,4 @@ final class ListOrderItem
     {
         return $this->discountValue;
     }
-
 }

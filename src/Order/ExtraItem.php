@@ -178,5 +178,4 @@ final class ExtraItem
     {
         return $this->rowTotal;
     }
-
 }

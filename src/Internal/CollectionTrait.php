@@ -74,6 +74,5 @@ trait CollectionTrait
 
     private function __construct()
     {
-
     }
 }

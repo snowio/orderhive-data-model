@@ -17,7 +17,6 @@ use SnowIO\OrderHiveDataModel\Product\Configurable\ProductPricesSet;
 use SnowIO\OrderHiveDataModel\Product\ProductStore;
 use SnowIO\OrderHiveDataModel\Product\ProductStoresSet;
 
-
 class BundleProductTest extends TestCase
 {
     private function getJsonData($modelName)

@@ -35,6 +35,5 @@ final class CreateConfigurableProductCommand
 
     private function __construct()
     {
-
     }
 }

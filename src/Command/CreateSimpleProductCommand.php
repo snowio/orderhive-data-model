@@ -35,6 +35,5 @@ final class CreateSimpleProductCommand
 
     private function __construct()
     {
-
     }
 }

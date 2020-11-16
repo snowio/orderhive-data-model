@@ -646,5 +646,4 @@ final class Item
     {
         return $this->metaData;
     }
-
 }

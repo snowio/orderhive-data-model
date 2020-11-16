@@ -109,6 +109,4 @@ class Warehouse extends BaseWarehouse
         $result->dropShipperPolicy = $dropShipperPolicy;
         return $result;
     }
-
-
 }

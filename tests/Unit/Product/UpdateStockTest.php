@@ -12,7 +12,6 @@ use SnowIO\OrderHiveDataModel\Product\WarehousesSet;
 
 class UpdateStockTest extends TestCase
 {
-
     private function getJsonData($warehouseId, $productId)
     {
         return [
@@ -90,6 +89,5 @@ class UpdateStockTest extends TestCase
                         ->withWarehouseId(111111)
                 ]))
         ]));
-
     }
 }
