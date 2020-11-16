@@ -28,13 +28,14 @@ class WarehouseLocations implements \IteratorAggregate
     public function toJson(): array
     {
         return \array_map(function (WarehouseLocation $item) {
-                return $item->toJson();
-            }, array_values($this->items));
+            return $item->toJson();
+        }, array_values($this->items));
     }
 
     private static function itemsAreEqual(
         WarehouseLocation $warehouseLocation,
-        WarehouseLocation $otherWarehouseLocation) : bool
+        WarehouseLocation $otherWarehouseLocation
+    ) : bool
     {
         return $warehouseLocation->equals($otherWarehouseLocation);
     }

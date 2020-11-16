@@ -23,7 +23,6 @@ use SnowIO\OrderHiveDataModel\Order\TaxInfoGroupSet;
 
 class ListOrderTest extends TestCase
 {
-
     private function getJsonData($referenceNumber)
     {
         return [

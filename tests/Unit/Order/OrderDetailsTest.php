@@ -165,8 +165,8 @@ class OrderDetailsTest extends TestCase
             "templates" => null,
             "print_status" => null,
             "sub_users" => null,
-            "tags" => Array (),
-            "order_extra_items" => Array (),
+            "tags" => array(),
+            "order_extra_items" => array(),
             "tax_calculation" => null,
             "valid_shipping_address" => null,
             "shipping_address_type" => null,
@@ -313,7 +313,7 @@ class OrderDetailsTest extends TestCase
         self::assertEquals($order->getReferenceNumber(), '111111');
         self::assertEquals($order->getId(), 1);
 
-        foreach($order->getOrderItems() as $item){
+        foreach ($order->getOrderItems() as $item) {
             self::assertSame($item->getQuantityOrdered(), 1);
             self::assertSame($item->getPrice(), 322.0);
             self::assertSame($item->getDiscountValue(), 72.128);

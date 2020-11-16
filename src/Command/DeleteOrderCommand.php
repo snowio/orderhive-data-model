@@ -32,6 +32,5 @@ final class DeleteOrderCommand
 
     private function __construct()
     {
-
     }
 }

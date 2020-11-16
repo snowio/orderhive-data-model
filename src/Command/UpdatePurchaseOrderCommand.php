@@ -35,6 +35,5 @@ final class UpdatePurchaseOrderCommand
 
     private function __construct()
     {
-
     }
 }

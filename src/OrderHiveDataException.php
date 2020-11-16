@@ -4,5 +4,4 @@ namespace SnowIO\OrderHiveDataModel;
 
 final class OrderHiveDataException extends \Exception
 {
-
 }

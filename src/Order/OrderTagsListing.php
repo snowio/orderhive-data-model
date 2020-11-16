@@ -83,6 +83,4 @@ final class OrderTagsListing
     {
         return $this->tagName;
     }
-
-
 }

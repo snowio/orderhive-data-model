@@ -35,6 +35,5 @@ final class CreateOrderCommand
 
     private function __construct()
     {
-
     }
 }

@@ -259,5 +259,4 @@ class ExtraItem
     {
         return $this->displayType;
     }
-
 }

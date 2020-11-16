@@ -35,6 +35,5 @@ final class CreateBundleProductCommand
 
     private function __construct()
     {
-
     }
 }
