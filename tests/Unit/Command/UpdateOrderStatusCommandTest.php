@@ -52,4 +52,36 @@ class UpdateOrderStatusCommandTest extends TestCase
             'order_status' => 'cancel',
         ], $updateOrderCommand->toJson());
     }
+
+    public function testGetters()
+    {
+        $order = UpdateOrderStatus::of(12)
+            ->withCreatePayment(true)
+            ->withRemark('remark')
+            ->withDeliveryDate('2020-10-10')
+            ->withSalesOrderId([123,321])
+            ->withOrderStatus('cancel');
+
+        $updateOrderCommand = UpdateOrderStatusCommand::of($order);
+
+        self::assertEquals([
+            'create_payment' => true,
+            'order_status' => 'cancel',
+            'remark' => 'remark',
+            'delivery_date' => '2020-10-10',
+            'id' => 12,
+            'sales_order_id' => [123,321],
+        ], $updateOrderCommand->toJson());
+
+
+        $updateOrderCommand = UpdateOrderStatusCommand::of(
+            UpdateOrderStatus::of(12)
+                ->withOrderStatus('cancel')
+        );
+
+        self::assertSame([
+            'id' => 12,
+            'order_status' => 'cancel',
+        ], $updateOrderCommand->toJson());
+    }
 }

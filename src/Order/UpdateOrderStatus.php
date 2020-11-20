@@ -75,7 +75,7 @@ final class UpdateOrderStatus
         return $result;
     }
 
-    public function getCreatePayment() :?string
+    public function getCreatePayment() :?bool
     {
         return $this->createPayment;
     }
