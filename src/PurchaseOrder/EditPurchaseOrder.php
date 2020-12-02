@@ -19,7 +19,7 @@ final class EditPurchaseOrder
         $result->expectedDate = $json['expected_date'] ?? null;
 
         $result->customFields = isset($json['custom_fields'])
-            ? CustomFields::fromJson($json['custom_fields'])
+            ? CustomFieldsSet::fromJson($json['custom_fields'])
             : CustomFieldsSet::create();
 
         return $result;
