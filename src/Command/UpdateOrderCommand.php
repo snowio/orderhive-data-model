@@ -30,6 +30,20 @@ final class UpdateOrderCommand
         return $this->editOrder->toJson();
     }
 
+    /**
+     * Only return the specified keys which allow us to field specific
+     * updates and not empty other data
+     * @param $keys
+     * @return array
+     */
+    public function toJsonFiltered($keys): array
+    {
+        $json = $this->editOrder->toJson();
+        return array_filter($json, function ($key, $val) use ($keys){
+            return in_array($val, $keys) ? [$key => $val] : null;
+        }, ARRAY_FILTER_USE_BOTH);
+    }
+
     /** @var EditOrder */
     private $editOrder;
 
