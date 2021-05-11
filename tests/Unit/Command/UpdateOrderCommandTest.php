@@ -86,4 +86,18 @@ class UpdateOrderCommandTest extends TestCase
             'order_items' => [],
         ], $updateOrderCommand->toJson());
     }
+
+    public function testToJsonFiltered()
+    {
+        $payload = UpdateOrderCommand::of(
+            EditOrder::of(127939562)
+                ->withDeliveryDate('2021-07-06 00:00:00')
+        )->toJsonFiltered(['id', 'delivery_date']);
+
+        self::assertEquals([
+            'id' => 127939562,
+            'delivery_date' => '2021-07-06 00:00:00',
+        ], $payload);
+    }
+
 }
