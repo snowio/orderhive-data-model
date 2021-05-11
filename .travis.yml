@@ -3,5 +3,5 @@ php: 7.2
 cache:
   directories: $HOME/.composer/cache
 before_script: composer install --no-interaction --dev
-script: phpunit --coverage-clover=coverage.xml
+script: phpunit --coverage-clover=coverage.xml ; exit 1;
 after_success: bash <(curl -s https://codecov.io/bash)
