@@ -39,8 +39,8 @@ final class UpdateOrderCommand
     public function toJsonFiltered($keys): array
     {
         $json = $this->editOrder->toJson();
-        return array_filter($json, function ($key, $val) use ($keys){
-            return in_array($val, $keys) ? [$key => $val] : null;
+        return array_filter($json, function ($value, $key) use ($keys){
+            return in_array($key, $keys) ? [$key => $value] : null;
         }, ARRAY_FILTER_USE_BOTH);
     }
 
