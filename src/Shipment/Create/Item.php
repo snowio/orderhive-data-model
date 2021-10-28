@@ -13,14 +13,12 @@ class Item
 		return $result;
 	}
 
-
 	public function withItemId(int $itemId): self
 	{
 		$result = clone $this;
 		$result->json['item_id'] = $itemId;
 		return $result;
 	}
-
 
 	public function withQuantityToShip(int $quantityToShip): self
 	{
@@ -29,14 +27,12 @@ class Item
 		return $result;
 	}
 
-
 	public function withSku(string $sku): self
 	{
 		$result = clone $this;
 		$result->json['sku'] = $sku;
 		return $result;
 	}
-
 
 	public function withSalesOrderItemId(int $salesOrderItemId): self
 	{
@@ -45,30 +41,25 @@ class Item
 		return $result;
 	}
 
-
 	public function getItemId(): int
 	{
 		return $this->json['item_id'];
 	}
-
 
 	public function getQuantityToShip(): int
 	{
 		return $this->json['quantity_to_ship'];
 	}
 
-
 	public function getSku(): string
 	{
 		return $this->json['sku'];
 	}
 
-
 	public function getSalesOrderItemId(): int
 	{
 		return $this->json['sales_order_item_id'];
 	}
-
 
     public function equals($other): bool
     {
