@@ -1,0 +1,25 @@
+{
+ "tracking_number": "UM272306422US",
+ "shipping_cost": "10",
+ "order_currency": "USD",
+ "shipping_method": "courier",
+ "courier_name": "USPS",
+ "shipping_date": "2019-11-14",
+ "sales_order_id": 4412448,
+ "warehouse_id": 11212,
+ "label_url": "https://tinyurl.com/lable.jpg",
+ "package_weight": "11.20",
+ "package_weight_unit": "LB",
+ "length": "1",
+ "width": "2",
+ "height": "3",
+ "dimension_unit": "IN",
+ "items": [
+  {
+   "item_id": 15850336,
+   "quantity_to_ship": 2,
+   "sku": "0305",
+   "sales_order_item_id": 14843086
+  }
+ ]
+}
