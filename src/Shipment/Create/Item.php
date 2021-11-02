@@ -6,6 +6,11 @@ class Item
 {
 	private $json;
 
+    public static function create(): self
+    {
+        return new self;
+    }
+
 	public static function fromJson(array $json): self
 	{
 		$result = new self;
