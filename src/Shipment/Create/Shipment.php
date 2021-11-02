@@ -63,7 +63,7 @@ class Shipment
 		return $result;
 	}
 
-	public function withSalesOrderId(int $salesOrderId): self
+	public function withSalesOrderId($salesOrderId): self
 	{
 		$result = clone $this;
 		$result->json['sales_order_id'] = $salesOrderId;
