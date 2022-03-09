@@ -2,7 +2,6 @@
 declare(strict_types = 1);
 namespace SnowIO\OrderHiveDataModel\Command;
 
-
 use SnowIO\OrderHiveDataModel\Shipment\Create\Shipment;
 
 final class CreateShipmentCommand
@@ -35,6 +34,5 @@ final class CreateShipmentCommand
 
     private function __construct()
     {
-
     }
 }
