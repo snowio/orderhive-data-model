@@ -35,8 +35,7 @@ class WarehouseLocations implements \IteratorAggregate
     private static function itemsAreEqual(
         WarehouseLocation $warehouseLocation,
         WarehouseLocation $otherWarehouseLocation
-    ) : bool
-    {
+    ) : bool {
         return $warehouseLocation->equals($otherWarehouseLocation);
     }
 }
