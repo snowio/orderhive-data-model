@@ -38,6 +38,19 @@ class UpdateStockCommandTest extends TestCase
         self::assertTrue($updateProduct->getUpdateStock()->equals($expected->getUpdateStock()));
     }
 
+    public function testRemark()
+    {
+        $remark = Remark::of('Test')->toJson();
+        self::assertSame(['source' => 'Test', 'desc' => null], $remark);
+
+        $remark = Remark::create()->withDesc('desc')->withSource('test')->toJson();
+        self::assertSame(['source' => 'test', 'desc' => 'desc'], $remark);
+
+        $remark = Remark::create()->withDesc('desc')->withSource('test');
+        self::assertSame('desc', $remark->getDesc());
+        self::assertSame('test', $remark->getSource());
+    }
+
     public function testToJson()
     {
         $updateProduct = UpdateStockCommand::fromJson([
