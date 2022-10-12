@@ -20,7 +20,7 @@ class Warehouse
     {
         return self::of($json['warehouse_id'] ?? null)
             ->withOnHandQuantity($json['on_hand_quantity'] ?? null)
-            ->withRemark(Remark::of($json['remark']['source'] ?? null))
+            ->withRemark(Remark::of($json['remark']['source'] ?? null, $json['remark']['desc'] ?? null))
             ->withInventoryLevels(InventoryLevelsSet::fromJson($json['inventory_levels'] ?? []));
     }
 

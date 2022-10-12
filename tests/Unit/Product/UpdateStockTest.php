@@ -21,7 +21,8 @@ class UpdateStockTest extends TestCase
                     'warehouse_id' => $warehouseId,
                     "on_hand_quantity" => 400,
                     "remark" => [
-                        "source" => "Manual Adjustment"
+                        "source" => "Manual Adjustment",
+                        "desc" => "Comment"
                     ],
                     "inventory_levels" => [
                         [
@@ -54,7 +55,7 @@ class UpdateStockTest extends TestCase
         $order = UpdateStock::of(123)
             ->withWarehouses(WarehousesSet::of([
                 Warehouse::of(1)
-                    ->withRemark(Remark::of('Manual Adjustment'))
+                    ->withRemark(Remark::of('Manual Adjustment', 'Comment'))
                     ->withOnHandQuantity(400)
                     ->withWarehouseId(0001)
                     ->withInventoryLevels(InventoryLevelsSet::of([
@@ -78,7 +79,7 @@ class UpdateStockTest extends TestCase
         self::assertEquals($order->getProductId(), 123);
         self::assertEquals($order->getWarehouses(), WarehousesSet::of([
             Warehouse::of(111111)
-                ->withRemark(Remark::of('Manual Adjustment'))
+                ->withRemark(Remark::of('Manual Adjustment', 'Comment'))
                 ->withOnHandQuantity(400)
                 ->withInventoryLevels(InventoryLevelsSet::of([
                     InventoryLevels::of(123, 400)
